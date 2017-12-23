@@ -32,6 +32,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -95,7 +97,8 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	@Autowired
-	private AutowiredtesterImp autowiredtesterImp;
+	@Qualifier("awired")
+	private Autowiredtester autowiredtesterImp;
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
