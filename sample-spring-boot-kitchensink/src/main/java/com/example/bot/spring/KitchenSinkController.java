@@ -37,6 +37,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
 
+import com.example.bot.spring.AutowiredtesterImp;
+
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.ReplyMessage;
@@ -219,7 +221,7 @@ public class KitchenSinkController {
 							if(result != null){
 								this.replyText(replyToken, result);
 							}else{
-								this.replyText(replyToken, "autowired result is null");	
+								this.replyText(replyToken, "autowired result is null");
 							}
 
 							break;
