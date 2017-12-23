@@ -39,7 +39,7 @@ import com.linecorp.bot.servlet.LineBotCallbackRequestParser;
 import com.linecorp.bot.spring.boot.interceptor.LineBotServerInterceptor;
 import com.linecorp.bot.spring.boot.support.LineBotServerArgumentProcessor;
 import com.linecorp.bot.spring.boot.support.LineMessageHandlerSupport;
-import com.linecorp.bot.spring.boot.ConnectionManager;
+// import com.linecorp.bot.spring.boot.ConnectionManager;
 @Configuration
 @EnableConfigurationProperties(LineBotProperties.class)
 @Import(LineMessageHandlerSupport.class)
@@ -101,8 +101,8 @@ public class LineBotAutoConfiguration {
     // @Autowired
     // private ConnectionManager connectionManager;
 
-    @Bean
-    public ConnectionManager connectionManager(){
-      return new ConnectionManager();
-    }
+    // @Bean
+    // public ConnectionManager connectionManager(){
+    //   return new ConnectionManager();
+    // }
 }
