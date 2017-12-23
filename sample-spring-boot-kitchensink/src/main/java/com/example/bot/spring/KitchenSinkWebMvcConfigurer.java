@@ -15,7 +15,7 @@
  */
 
 package com.example.bot.spring;
-// import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
-// @ComponentScan("com.example.bot.spring")
+@ComponentScan("com.example.bot.spring")
 public class KitchenSinkWebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -37,7 +37,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
 
-import com.example.bot.spring.AutowiredtesterImp;
+// import com.example.bot.spring.AutowiredtesterImp;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
