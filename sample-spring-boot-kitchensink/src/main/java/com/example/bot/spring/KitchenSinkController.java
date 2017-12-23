@@ -87,12 +87,13 @@ import java.net.URI;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
-	
+
 
 
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
-
+	@Autowired
+	private AutowiredtesterImp autowiredtesterImp;
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -213,6 +214,16 @@ public class KitchenSinkController {
 
         log.info("Got text message from {}: {}", replyToken, text);
         switch (text) {
+						case "autowired":{
+							String result = autowiredtesterImp.test();
+							if(result != null){
+								this.replyText(replyToken, result);
+							}else{
+								this.replyText(replyToken, "autowired result is null");	
+							}
+
+							break;
+						}
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
@@ -312,7 +323,7 @@ public class KitchenSinkController {
 	}
 
 
-	
+
 
 
 	public KitchenSinkController() {
@@ -322,7 +333,7 @@ public class KitchenSinkController {
 
 	private DatabaseEngine database;
 	private String itscLOGIN;
-	
+
 
 	//The annontation @Value is from the package lombok.Value
 	//Basically what it does is to generate constructor and getter for the class below
@@ -338,7 +349,7 @@ public class KitchenSinkController {
 	class ProfileGetter implements BiConsumer<UserProfileResponse, Throwable> {
 		private KitchenSinkController ksc;
 		private String replyToken;
-		
+
 		public ProfileGetter(KitchenSinkController ksc, String replyToken) {
 			this.ksc = ksc;
 			this.replyToken = replyToken;
@@ -358,7 +369,7 @@ public class KitchenSinkController {
         	);
     	}
     }
-	
-	
+
+
 
 }

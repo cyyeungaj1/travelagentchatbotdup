@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+
 import com.linecorp.bot.client.ChannelTokenSupplier;
 import com.linecorp.bot.client.FixedChannelTokenSupplier;
 import com.linecorp.bot.client.LineMessagingClient;
@@ -38,11 +39,11 @@ import com.linecorp.bot.servlet.LineBotCallbackRequestParser;
 import com.linecorp.bot.spring.boot.interceptor.LineBotServerInterceptor;
 import com.linecorp.bot.spring.boot.support.LineBotServerArgumentProcessor;
 import com.linecorp.bot.spring.boot.support.LineMessageHandlerSupport;
-
+import com.linecorp.bot.spring.boot.ConnectionManager;
 @Configuration
-@AutoConfigureAfter(LineBotWebMvcConfigurer.class)
 @EnableConfigurationProperties(LineBotProperties.class)
 @Import(LineMessageHandlerSupport.class)
+// @Import()
 public class LineBotAutoConfiguration {
     @Autowired
     private LineBotProperties lineBotProperties;
@@ -95,5 +96,13 @@ public class LineBotAutoConfiguration {
     public LineBotCallbackRequestParser lineBotCallbackRequestParser(
             LineSignatureValidator lineSignatureValidator) {
         return new LineBotCallbackRequestParser(lineSignatureValidator);
+    }
+    //
+    // @Autowired
+    // private ConnectionManager connectionManager;
+
+    @Bean
+    public ConnectionManager connectionManager(){
+      return new ConnectionManager();
     }
 }

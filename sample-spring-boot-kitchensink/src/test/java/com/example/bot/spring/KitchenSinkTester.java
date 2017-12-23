@@ -16,6 +16,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,14 +45,16 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.bot.spring.DatabaseEngine;
-
-
+import com.linecorp.bot.spring.boot.ConnectionManager;
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class })
+
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
-
+	// @Autowired
+	// private ConnectionManager connectionManager;
 	@Test
 	public void testNotFound() throws Exception {
 		boolean thrown = false;
@@ -87,5 +91,13 @@ public class KitchenSinkTester {
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(result).isEqualTo("Hey, how things going?");
 	}
+
+	// @Test
+	// public void testAutoWired() {
+  //
+	// 	String result = connectionManager.test();
+	// 	log.info("autowired::" + result);
+	// 	assertThat(result).isEqualTo("autowired test successful");
+	// }
 
 }

@@ -30,6 +30,7 @@ public class KitchenSinkApplication {
     public static void main(String[] args) throws IOException {
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
+        // autowiredtesterImp a = (autowiredtesterImp) SpringApplication.run(KitchenSinkApplication.class, args).getBean("autowiredtesterImp");
     }
- 
+
 }
