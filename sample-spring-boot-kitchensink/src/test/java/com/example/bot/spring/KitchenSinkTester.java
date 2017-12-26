@@ -48,11 +48,13 @@ import com.example.bot.spring.DatabaseEngine;
 import com.linecorp.bot.spring.boot.ConnectionManager;
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class })
 
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
+	@Autowired
+	private SQLDatabaseEngine sqlDatabaseEngine;
 	// @Autowired
 	// private ConnectionManager connectionManager;
 	@Test
@@ -92,6 +94,7 @@ public class KitchenSinkTester {
 		assertThat(result).isEqualTo("Hey, how things going?");
 	}
 
+
 	// @Test
 	// public void testAutoWired() {
   //
@@ -99,5 +102,24 @@ public class KitchenSinkTester {
 	// 	log.info("autowired::" + result);
 	// 	assertThat(result).isEqualTo("autowired test successful");
 	// }
+
+	@Test
+	public void testSQL() {
+
+		try{
+			String result = sqlDatabaseEngine.search("matt");
+			assertThat(result).isEqualTo("is handsome");
+			log.info("sql::" + result);
+			result = sqlDatabaseEngine.search("handsome");
+			assertThat(result).isEqualTo("is matt");
+			log.info("sql::" + result);
+			result = sqlDatabaseEngine.search("mattt");
+			// assertThat(result).isEqualTo("is handsome");
+			log.info("sql::" + result);
+		}catch(Exception e){
+			
+		}
+
+	}
 
 }

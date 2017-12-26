@@ -12,10 +12,30 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 	@Override
 	String search(String text) throws Exception {
 		//Write your code here
-		return null;
+		String result = "null";
+		String error = null;
+		try{
+			Connection connection = getConnection();
+			PreparedStatement stmt = connection.prepareStatement("SELECT response FROM keywordlist WHERE keyword = ?");
+			log.info(stmt.toString());
+			stmt.setString(1, text);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+				result = rs.getString("response");
+			rs.close();
+			stmt.close();
+			connection.close();
+		}catch(Exception e){
+			// log.info(e);
+			error = e.toString();
+			result = "null exception";
+		}
+		if(error != null)
+			log.info("sql error::" + error);
+		return result;
 	}
-	
-	
+
+
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;
 		URI dbUri = new URI(System.getenv("DATABASE_URL"));
@@ -26,7 +46,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 
 		log.info("Username: {} Password: {}", username, password);
 		log.info ("dbUrl: {}", dbUrl);
-		
+
 		connection = DriverManager.getConnection(dbUrl, username, password);
 
 		return connection;
