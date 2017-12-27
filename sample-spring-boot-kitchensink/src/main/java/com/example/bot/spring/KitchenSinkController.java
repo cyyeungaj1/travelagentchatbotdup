@@ -32,10 +32,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
+
+// import com.example.bot.spring.AutowiredtesterImp;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -87,12 +91,14 @@ import java.net.URI;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
-	
+
 
 
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
-
+	@Autowired
+	@Qualifier("awired")
+	private Autowiredtester autowiredtesterImp;
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -213,6 +219,16 @@ public class KitchenSinkController {
 
         log.info("Got text message from {}: {}", replyToken, text);
         switch (text) {
+						case "autowired":{
+							String result = autowiredtesterImp.test();
+							if(result != null){
+								this.replyText(replyToken, result);
+							}else{
+								this.replyText(replyToken, "autowired result is null");
+							}
+
+							break;
+						}
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
@@ -312,17 +328,18 @@ public class KitchenSinkController {
 	}
 
 
-	
+
 
 
 	public KitchenSinkController() {
-		database = new DatabaseEngine();
+		// database = new DatabaseEngine();
+		database = new SQLDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 	}
 
 	private DatabaseEngine database;
 	private String itscLOGIN;
-	
+
 
 	//The annontation @Value is from the package lombok.Value
 	//Basically what it does is to generate constructor and getter for the class below
@@ -338,7 +355,7 @@ public class KitchenSinkController {
 	class ProfileGetter implements BiConsumer<UserProfileResponse, Throwable> {
 		private KitchenSinkController ksc;
 		private String replyToken;
-		
+
 		public ProfileGetter(KitchenSinkController ksc, String replyToken) {
 			this.ksc = ksc;
 			this.replyToken = replyToken;
@@ -358,7 +375,7 @@ public class KitchenSinkController {
         	);
     	}
     }
-	
-	
+
+
 
 }
