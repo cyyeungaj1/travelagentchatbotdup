@@ -1,6 +1,11 @@
 package com.example.bot.spring;
 
 
+import javax.sql.DataSource;
+import java.sql.*;
+import java.net.URISyntaxException;
+
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -16,6 +21,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 
 import org.springframework.stereotype.Component;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,16 +52,20 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.bot.spring.DatabaseEngine;
-import com.linecorp.bot.spring.boot.ConnectionManager;
+// import com.linecorp.bot.spring.boot.ConnectionManager;
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, ConnectionManager.class, SQLDatabaseEngine.class })
 
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
 	@Autowired
 	private SQLDatabaseEngine sqlDatabaseEngine;
+
+	// @Qualifier("connectionManager")
+	@Autowired
+	private ConnectionManager connectionManager;
 	// @Autowired
 	// private ConnectionManager connectionManager;
 	@Test
@@ -107,6 +118,7 @@ public class KitchenSinkTester {
 	public void testSQL() {
 
 		try{
+
 			String result = sqlDatabaseEngine.search("matt");
 			assertThat(result).isEqualTo("is handsome");
 			log.info("sql::" + result);
@@ -116,10 +128,29 @@ public class KitchenSinkTester {
 			result = sqlDatabaseEngine.search("mattt");
 			// assertThat(result).isEqualTo("is handsome");
 			log.info("sql::" + result);
+
 		}catch(Exception e){
-			
+
+		}
+	}
+
+
+	@Test
+	public void testConnection() {
+		for(int i = 0; i < 50; ++i){
+			String error = null;
+			try{
+				SQLDatabaseEngine dbe = new SQLDatabaseEngine();
+				String result = dbe.search("matt");
+				log.info(Integer.toString(i) + ", " + result);
+			}catch(Exception e){
+				error = e.toString();
+			}
+			if(error != null)
+				log.info(Integer.toString(i) + ", " + error);
 		}
 
 	}
+
 
 }
