@@ -42,7 +42,44 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			log.info("sql error::" + error);
 		return result;
 	}
+	public void createUser(String line_id){
+		/*0 == success*/
+		/*-1 == fail*/
+		String error = null;
+		String inner_error = null;
+		long id = -1;
+		try{
+			Connection connection = getConnection();
+			PreparedStatement stmt = connection.prepareStatement("INSERT INTO line_user (line_id) VALUES (?)");
+			stmt.setString(1, line_id);
+			int affectedRows = stmt.executeUpdate();
 
+			if(affectedRows == 0)
+				log.info("Create user failed, no row affected");
+
+			try{
+				PreparedStatement stmt2 = connection.prepareStatement("SELECT id FROM line_user WHERE line_id = ?");
+				stmt2.setString(1, line_id);
+
+				ResultSet rs = stmt2.executeQuery();
+				if(rs.next())
+					id = rs.getLong(1);
+
+			}catch(Exception e){
+				inner_error = e.toString();
+			}
+		}catch(Exception e){
+			error = e.toString();
+		}
+
+
+		if(error != null)
+			log.info("createUser::" + error);
+		if(inner_error != null)
+			log.info("createUser::inner::" + inner_error);
+
+		log.info("createUser::getId::" + Long.toString(id));
+	}
 
 
 	private Connection getConnection() throws URISyntaxException, SQLException {

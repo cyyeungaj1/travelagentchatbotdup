@@ -149,7 +149,12 @@ public class KitchenSinkTester {
 			if(error != null)
 				log.info(Integer.toString(i) + ", " + error);
 		}
+	}
 
+	@Test
+	public void testCreateUser() {
+		sqlDatabaseEngine.createUser("abc");
+		assertThat("abc").isEqualTo("abc");
 	}
 
 
