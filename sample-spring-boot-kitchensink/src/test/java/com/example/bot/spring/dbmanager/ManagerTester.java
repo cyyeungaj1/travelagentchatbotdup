@@ -34,15 +34,15 @@ public class ManagerTester {
 	}
 
   @Test
-	public void testSelection() {
-		JDBCLineUserManager mLine = new JDBCLineUserManager();
-		// for(int i = 0; i < 30; ++i){
-		// 	UserFactory uf = new UserFactory();
-		// 	uf.setLineId(Integer.toString(i));
-		// 	User user = mLine.createUser(uf.getUser());
-		// 	log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
-		// 	log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
-		// }
+	public void testDeleteUser() {
+		// JDBCLineUserManager mLine = new JDBCLineUserManager();
+  	// UserFactory uf = new UserFactory();
+		// uf.setLineId("999");
+		// User user = mLine.createUser(uf.getUser());
+		// log.info(": testCreateUser::ID: " + user.getId());
+		// log.info(": testCreateUser::LineId: " + user.getLineId());
+    //
+    // mLine.deleteUser(user);
 
 
 		assertThat("abc").isEqualTo("abc");

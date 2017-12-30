@@ -20,12 +20,13 @@ public class SQLDatabaseEngine{
 
 	private static ConnectionManager connectionManager = new ConnectionManager();
 
+
+	/*
+	0: normal
+	-1: error
+	-2: insertion fail
+	*/
 	public int insert(String sql){
-		/*
-		0: normal
-		-1: error
-		-2: insertion fail
-		*/
 		String error = null;
 		int affectedRows = -1;
 		try{
@@ -47,6 +48,23 @@ public class SQLDatabaseEngine{
 		}
 		return 0;
 	}
+	public void delete(String sql){
+		String error = null;
+		int affectedRows = -1;
+		try{
+			Connection connection = getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			affectedRows = stmt.executeUpdate();
+		}catch(Exception e){
+			error = e.toString();
+		}
+		if(affectedRows == 0)
+			log.info("delete::delete failed, no row affected");
+
+		if(error != null)
+			log.info("delete::error::" + error );
+	}
+
 
 	public ResultSet selection(String sql){
 		//Write your code here

@@ -82,6 +82,8 @@ import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import com.example.bot.spring.dbmanager.JDBCLineUserManager;
+
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -154,12 +156,23 @@ public class KitchenSinkController {
 	@EventMapping
 	public void handleUnfollowEvent(UnfollowEvent event) {
 		log.info("unfollowed this bot: {}", event);
+		JDBCLineUserManager mLine = new JDBCLineUserManager();
+		String userId = event.getSource().getUserId();
+		User user = findUserByLineId(userId);
+		mLine.deleteUser(user);
 	}
 
 	@EventMapping
 	public void handleFollowEvent(FollowEvent event) {
 		String replyToken = event.getReplyToken();
 		this.replyText(replyToken, "Got followed event");
+		JDBCLineUserManager mLine = new JDBCLineUserManager();
+		String userId = event.getSource().getUserId();
+		UserFactory uf = new UserFactory();
+		uf.setLineId(userId);
+		User user = mLine.createUser(uf.getUser());
+		log.info("CreateUser::ID: " + user.getId());
+		log.info("CreateUser::LineId: " + user.getLineId());
 	}
 
 	@EventMapping

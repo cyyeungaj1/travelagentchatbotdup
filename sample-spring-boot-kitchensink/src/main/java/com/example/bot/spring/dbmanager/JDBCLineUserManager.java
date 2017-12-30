@@ -33,11 +33,16 @@ public class JDBCLineUserManager extends SQLDatabaseEngine{
     return result;
   }
   public void insertUser(String line_id){
-    String error = null;
+
     String sql = "INSERT INTO line_user (line_id) VALUES ('" + line_id + "')";
     int result = insert(sql);
   }
+  public void deleteUser(User user){
+    String sql = "DELETE FROM line_user WHERE id = " + user.getId();
+    delete(sql);
+  }
 
+  
   public User getRecord(ResultSet rs){
     String error = null;
     UserFactory uf = new UserFactory();
