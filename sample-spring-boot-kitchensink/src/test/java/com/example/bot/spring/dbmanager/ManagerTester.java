@@ -21,18 +21,31 @@ public class ManagerTester {
   @Test
 	public void testCreateUser() {
 		JDBCLineUserManager mLine = new JDBCLineUserManager();
-		for(int i = 0; i < 30; ++i){
-			UserFactory uf = new UserFactory();
-			uf.setLineId(Integer.toString(i));
-			User user = mLine.createUser(uf.getUser());
-			log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
-			log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
-		}
+		// for(int i = 0; i < 30; ++i){
+		// 	UserFactory uf = new UserFactory();
+		// 	uf.setLineId(Integer.toString(i));
+		// 	User user = mLine.createUser(uf.getUser());
+		// 	log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
+		// 	log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
+		// }
 
 
 		assertThat("abc").isEqualTo("abc");
 	}
 
+  @Test
+	public void testSelection() {
+		JDBCLineUserManager mLine = new JDBCLineUserManager();
+		// for(int i = 0; i < 30; ++i){
+		// 	UserFactory uf = new UserFactory();
+		// 	uf.setLineId(Integer.toString(i));
+		// 	User user = mLine.createUser(uf.getUser());
+		// 	log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
+		// 	log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
+		// }
 
+
+		assertThat("abc").isEqualTo("abc");
+	}
 
 }
