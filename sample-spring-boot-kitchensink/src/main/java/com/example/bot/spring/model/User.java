@@ -1,4 +1,4 @@
-package com.example.bot.spring;
+package com.example.bot.spring.model;
 
 
 public class User{

@@ -48,6 +48,8 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.LineBotMessages;
 
+
+
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
