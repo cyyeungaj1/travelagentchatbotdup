@@ -83,6 +83,9 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 import com.example.bot.spring.dbmanager.JDBCLineUserManager;
+import com.example.bot.spring.model.User;
+import com.example.bot.spring.model.UserFactory;
+
 
 import lombok.NonNull;
 import lombok.Value;
