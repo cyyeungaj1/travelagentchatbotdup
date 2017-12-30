@@ -161,7 +161,7 @@ public class KitchenSinkController {
 		log.info("unfollowed this bot: {}", event);
 		JDBCLineUserManager mLine = new JDBCLineUserManager();
 		String userId = event.getSource().getUserId();
-		User user = findUserByLineId(userId);
+		User user = mLine.findUserByLineId(userId);
 		mLine.deleteUser(user);
 	}
 
