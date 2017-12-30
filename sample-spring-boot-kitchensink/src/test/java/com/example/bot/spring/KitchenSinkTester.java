@@ -48,6 +48,8 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.LineBotMessages;
 
+
+
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -149,7 +151,16 @@ public class KitchenSinkTester {
 
 	// @Test
 	// public void testCreateUser() {
-	// 	sqlDatabaseEngine.createUser("abc");
+	// 	JDBCLineUserManager mLine = new JDBCLineUserManager();
+	// 	for(int i = 0; i < 30; ++i){
+	// 		UserFactory uf = new UserFactory();
+	// 		uf.setLineId(Integer.toString(i));
+	// 		User user = mLine.createUser(uf.getUser());
+	// 		log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
+	// 		log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
+	// 	}
+  //
+  //
 	// 	assertThat("abc").isEqualTo("abc");
 	// }
 
