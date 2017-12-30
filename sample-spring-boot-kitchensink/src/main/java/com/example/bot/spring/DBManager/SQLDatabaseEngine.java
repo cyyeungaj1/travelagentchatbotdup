@@ -1,4 +1,4 @@
-package com.example.bot.spring;
+package com.example.bot.spring.dbmanager;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,14 +13,14 @@ import java.net.URISyntaxException;
 // import java.net.URI;
 
 @Slf4j
-public class SQLDatabaseEngine extends DatabaseEngine {
+public class SQLDatabaseEngine{
 	// @Autowired
 	// @Qualifier("connectionManager")
 	// ConnectionManager connectionManager;
 
 
 	public static ConnectionManager connectionManager = new ConnectionManager();
-	@Override
+
 	String search(String text) throws Exception {
 		//Write your code here
 		String result = "null";

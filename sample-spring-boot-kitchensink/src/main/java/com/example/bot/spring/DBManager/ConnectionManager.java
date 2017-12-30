@@ -1,4 +1,4 @@
-package com.example.bot.spring;
+package com.example.bot.spring.dbmanager;
 
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.PostConstruct;
@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component("connectionManager")
 public class ConnectionManager{
   Connection connection = null;
+  public ConnectionManager(){
+    log.info("ConnectionManager Constructor");
+  }
   public Connection getConnection() throws URISyntaxException, SQLException {
 		if(connection == null){
   		URI dbUri = new URI(System.getenv("DATABASE_URL"));

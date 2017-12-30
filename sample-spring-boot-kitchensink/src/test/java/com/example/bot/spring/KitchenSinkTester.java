@@ -51,11 +51,12 @@ import com.linecorp.bot.spring.boot.annotation.LineBotMessages;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import com.example.bot.spring.DatabaseEngine;
-// import com.linecorp.bot.spring.boot.ConnectionManager;
+// import com.example.bot.spring.DatabaseEngine;
+// import com.example.bot.spring.dbmanager.ConnectionManager;
+// import com.example.bot.spring.dbmanager.JDBCLineUserManager;
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, ConnectionManager.class, SQLDatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class }) // ConnectionManager.class,
 
 public class KitchenSinkTester {
 	@Autowired
@@ -63,11 +64,6 @@ public class KitchenSinkTester {
 	@Autowired
 	private SQLDatabaseEngine sqlDatabaseEngine;
 
-	// @Qualifier("connectionManager")
-	@Autowired
-	private ConnectionManager connectionManager;
-	// @Autowired
-	// private ConnectionManager connectionManager;
 	@Test
 	public void testNotFound() throws Exception {
 		boolean thrown = false;
@@ -151,11 +147,11 @@ public class KitchenSinkTester {
 		}
 	}
 
-	@Test
-	public void testCreateUser() {
-		sqlDatabaseEngine.createUser("abc");
-		assertThat("abc").isEqualTo("abc");
-	}
+	// @Test
+	// public void testCreateUser() {
+	// 	sqlDatabaseEngine.createUser("abc");
+	// 	assertThat("abc").isEqualTo("abc");
+	// }
 
 
 }
