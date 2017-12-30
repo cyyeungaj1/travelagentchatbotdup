@@ -1,4 +1,4 @@
-package com.example.bot.spring.model;
+package com.example.bot.spring;
 
 public class UserFactory{
   private String line_id = null;

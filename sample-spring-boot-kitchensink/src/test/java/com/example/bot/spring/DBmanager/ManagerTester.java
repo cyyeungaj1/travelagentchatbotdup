@@ -51,22 +51,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest()   //ConnectionManager.class,, DatabaseEngine.class, SQLDatabaseEngine.class(classes = { ManagerTester.class}) (classes = { ManagerTester.class, JDBCLineUserManager.class})
-@Slf4j
+//
+// @RunWith(SpringRunner.class)
+// @SpringBootTest()   //ConnectionManager.class,, DatabaseEngine.class, SQLDatabaseEngine.class(classes = { ManagerTester.class}) (classes = { ManagerTester.class, JDBCLineUserManager.class})
+// @Slf4j
 public class ManagerTester {
 
 
-	@Test
-	public void testCreateUser() {
-		// JDBCLineUserManager mLine = new JDBCLineUserManager();
-		ConnectionManager connectionManager = new ConnectionManager();
-		// UserFactory uf = new UserFactory();
-		// uf.setLineId("abc");
-		// mLine.createUser(uf.getUser());
-		assertThat("abc").isEqualTo("abc");
-	}
+	// @Test
+	// public void testCreateUser() {
+	// 	// JDBCLineUserManager mLine = new JDBCLineUserManager();
+	// 	// ConnectionManager connectionManager = new ConnectionManager();
+	// 	// UserFactory uf = new UserFactory();
+	// 	// uf.setLineId("abc");
+	// 	// mLine.createUser(uf.getUser());
+	// 	assertThat("abc").isEqualTo("abc");
+	// }
 
 
 }

@@ -149,7 +149,16 @@ public class KitchenSinkTester {
 
 	// @Test
 	// public void testCreateUser() {
-	// 	sqlDatabaseEngine.createUser("abc");
+	// 	JDBCLineUserManager mLine = new JDBCLineUserManager();
+	// 	for(int i = 0; i < 30; ++i){
+	// 		UserFactory uf = new UserFactory();
+	// 		uf.setLineId(Integer.toString(i));
+	// 		User user = mLine.createUser(uf.getUser());
+	// 		log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
+	// 		log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
+	// 	}
+  //
+  //
 	// 	assertThat("abc").isEqualTo("abc");
 	// }
 

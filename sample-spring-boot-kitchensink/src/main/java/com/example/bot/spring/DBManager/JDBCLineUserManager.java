@@ -1,6 +1,6 @@
-package com.example.bot.spring.dbmanager;
-import com.example.bot.spring.model.User;
-import com.example.bot.spring.model.UserFactory;
+package com.example.bot.spring;
+// import com.example.bot.spring.model.User;
+// import com.example.bot.spring.model.UserFactory;
 // import com.example.bot.spring.SQLDatabaseEngine;
 import lombok.extern.slf4j.Slf4j;
 import javax.sql.DataSource;
@@ -11,26 +11,52 @@ public class JDBCLineUserManager extends SQLDatabaseEngine{
   private final String LINE_ID = "line_id";
 
   public User createUser(User user){
-    String error = null;
-    String line_id = user.getLineId();
-    String sql = "INSERT INTO line_user (line_id) VALUES ('" + line_id + "')";
-    int result = insert(sql);
+    insertUser(user.getLineId());
+    return findUserByLineId(user.getLineId());
+    // String error = null;
+    // String line_id = user.getLineId();
+    // String sql = "INSERT INTO line_user (line_id) VALUES ('" + line_id + "')";
+    // int result = insert(sql);
 
-    String sql2 = "SELECT id FROM line_user WHERE line_id = '" + line_id + "'";
-    long id = -1;
+    // String sql2 = "SELECT * FROM line_user WHERE line_id = '" + line_id + "'";
+    // long id = -1;
+    // try{
+    //   ResultSet rs = selection(sql2);
+    //   if(rs.next())
+    //     id = rs.getInt(USER_ID);
+    //   log.info("createUser::" + Long.toString(id));
+    //   // rs.close();
+    // }catch(Exception e){
+    //   error = e.toString();
+    // }
+    // if(error != null)
+    //   log.info("createUser::error::" + error);
+    //
+    // user.setId(id);
+    // return user;
+  }
+  public User findUserByLineId(String line_id){
+    String error = null;
+    String sql2 = "SELECT * FROM line_user WHERE line_id = '" + line_id + "'";
+    User result = null;
     try{
       ResultSet rs = selection(sql2);
       if(rs.next())
-        id = rs.getInt(USER_ID);
-      log.info("createUser::" + Long.toString(id));
+        result = getRecord(rs);
     }catch(Exception e){
       error = e.toString();
     }
     if(error != null)
-      log.info("createUser::error::" + error);
+      log.info("findUserByLineId::error::" + error);
+    if(result == null)
+      log.info("findUserByLineId::error::result is null");
 
-    user.setId(id);
-    return user;
+    return result;
+  }
+  public void insertUser(String line_id){
+    String error = null;
+    String sql = "INSERT INTO line_user (line_id) VALUES ('" + line_id + "')";
+    int result = insert(sql);
   }
 
   public User getRecord(ResultSet rs){

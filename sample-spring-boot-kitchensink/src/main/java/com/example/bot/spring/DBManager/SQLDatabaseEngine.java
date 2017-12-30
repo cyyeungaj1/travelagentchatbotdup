@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 
-import com.example.bot.spring.dbmanager.ConnectionManager;
+import com.example.bot.spring.ConnectionManager;
 import java.net.URISyntaxException;
 // import java.net.URI;
 

@@ -1,4 +1,4 @@
-package com.example.bot.spring.dbmanager;
+package com.example.bot.spring;
 
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.PostConstruct;

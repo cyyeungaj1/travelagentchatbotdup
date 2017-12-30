@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 
-import com.example.bot.spring.dbmanager.ConnectionManager;
+// import com.example.bot.spring.dbmanager.ConnectionManager;
 import java.net.URISyntaxException;
 // import java.net.URI;
 
@@ -53,7 +53,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			Connection connection = getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			affectedRows = stmt.executeUpdate();
-			stmt.close();
+			// stmt.close();
 		}catch(Exception e){
 			error = e.toString();
 		}
@@ -77,8 +77,8 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			Connection connection = getConnection();
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			stmt.close();
-			return rs;
+			// stmt.close();
+
 		}catch(Exception e){
 			error = e.toString();
 		}
