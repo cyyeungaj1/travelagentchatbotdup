@@ -13,10 +13,10 @@ public class ThreadPoolTaskSchedulerExamples {
   @Autowired
   private ThreadPoolTaskScheduler taskScheduler;
 
-  
+
   public ThreadPoolTaskSchedulerExamples(){
     Date date = new Date();
-    DateFormat df = DateFormat.getDateInstance();
+    DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     log.info("Schedule a task::" + df.format(date));
     taskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("20180102001500"));
   }

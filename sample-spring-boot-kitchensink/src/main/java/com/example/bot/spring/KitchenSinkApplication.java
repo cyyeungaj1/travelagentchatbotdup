@@ -23,8 +23,13 @@ import java.nio.file.Path;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.annotation.Import;
+import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerConfig;
+
+
 @SpringBootApplication
 @EnableScheduling
+@Import(ThreadPoolTaskSchedulerConfig.class)
 public class KitchenSinkApplication {
     static Path downloadedContentDir;
 
