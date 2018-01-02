@@ -62,7 +62,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class }) // ConnectionManager.class,
 // @SpringBootApplication
-// @EnableScheduling
+@EnableScheduling
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
@@ -170,7 +170,7 @@ public class KitchenSinkTester {
 	// private ThreadPoolTaskScheduler taskScheduler;
 	@Test
   public void schedulerTest() throws Exception {
-      ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
+      // ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
 			// if(taskScheduler == null)
 			// 	log.info("taskscheduler == null");
   }

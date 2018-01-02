@@ -24,8 +24,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.context.annotation.Import;
-// import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 
+
+// import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerConfig;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @SpringBootApplication
 @EnableScheduling
@@ -35,8 +38,13 @@ public class KitchenSinkApplication {
 
     public static void main(String[] args) throws IOException {
         downloadedContentDir = Files.createTempDirectory("line-bot");
+        // check();
+        
         SpringApplication.run(KitchenSinkApplication.class, args);
         // autowiredtesterImp a = (autowiredtesterImp) SpringApplication.run(KitchenSinkApplication.class, args).getBean("autowiredtesterImp");
     }
-
+    // public void check(){
+    //   if(threadPoolTaskScheduler == null)
+    //     log.info("threadPoolTaskScheduler in main is null");
+    // }
 }

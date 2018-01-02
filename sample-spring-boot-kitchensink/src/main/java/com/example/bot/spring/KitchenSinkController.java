@@ -39,6 +39,8 @@ import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+
 
 import com.google.common.io.ByteStreams;
 
@@ -107,7 +109,8 @@ import java.net.URI;
 public class KitchenSinkController {
 
 
-
+	@Autowired
+	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	@Autowired
@@ -205,6 +208,8 @@ public class KitchenSinkController {
 		if(responseError != null)
 			log.info("PushMesage::Response::error:" + responseError);
 
+		if(threadPoolTaskScheduler == null)
+			log.info("threadPoolTaskScheduler in controller is null");
 	}
 
 	@EventMapping

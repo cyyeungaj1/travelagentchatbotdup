@@ -7,27 +7,36 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 // import com.example.bot.spring.ThreadPoolTaskScheduler;
 @Slf4j
 public class ThreadPoolTaskSchedulerExamples {
-  @Bean
-  public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
-    ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
-    tpts.setPoolSize(5);
-    tpts.setThreadNamePrefix("Thread Pool Task S");
-    return tpts;
-  }
+  // @Bean
+  // public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
+  //   ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
+  //   tpts.setPoolSize(5);
+  //   tpts.setThreadNamePrefix("Thread Pool Task S");
+  //   return tpts;
+  // }
   @Autowired
-  private ThreadPoolTaskScheduler taskScheduler;
+  private ThreadPoolTaskScheduler threadPoolTaskScheduler;// = new ThreadPoolTaskScheduler();
+
+  // public ThreadPoolTaskScheduler getTPTS(){
+  //     ThreadPoolTaskScheduler tpts = new ThreadPoolTaskScheduler();
+  //     tpts.setPoolSize(5);
+  //     tpts.setThreadNamePrefix("Thread Pool Task S");
+  //     return tpts;
+  // }
 
 
   public ThreadPoolTaskSchedulerExamples(){
     Date date = new Date();
     DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    // ThreadPoolTaskScheduler threadPoolTaskScheduler = getTPTS();
     log.info("Schedule a task::" + df.format(date));
-    if(taskScheduler == null)
-      log.info("taskScheduler is null");
-    taskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/03 00:15:00"));
+    if(threadPoolTaskScheduler == null)
+      log.info("threadPoolTaskScheduler is null");
+    threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/03 00:15:00"));
   }
 
 
