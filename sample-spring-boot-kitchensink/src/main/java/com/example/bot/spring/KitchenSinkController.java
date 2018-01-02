@@ -34,7 +34,9 @@ import java.util.function.Consumer;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,6 +212,16 @@ public class KitchenSinkController {
 
 		if(threadPoolTaskScheduler == null)
 			log.info("threadPoolTaskScheduler in controller is null");
+		else
+		log.info("threadPoolTaskScheduler in controller is not null");
+
+			Date date = new Date();
+	    DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	    // ThreadPoolTaskScheduler threadPoolTaskScheduler = getTPTS();
+	    log.info("Schedule a task::" + df.format(date));
+	    if(threadPoolTaskScheduler == null)
+	      log.info("threadPoolTaskScheduler is null");
+	    threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/02 08:17:00"));
 	}
 
 	@EventMapping
@@ -427,5 +439,30 @@ public class KitchenSinkController {
     }
 
 
+		public Date transferStringToDate(String str){
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		    String parseError = null;
+		    Date date = null;
+		    try{
+		      date = sdf.parse(str.toString());
+		    }catch(Exception e){
+		      parseError = e.toString();
+		    }
+		    if(parseError != null)
+		      log.info("transferStringToDate::" + parseError);
+		    return date;
+		  }
+}
 
+
+@Slf4j
+class RunnableTask implements Runnable{
+  private String message = null;
+  public RunnableTask(String str){
+    message = str;
+  }
+  @Override
+  public void run(){
+    log.info("runable task::" + message);
+  }
 }
