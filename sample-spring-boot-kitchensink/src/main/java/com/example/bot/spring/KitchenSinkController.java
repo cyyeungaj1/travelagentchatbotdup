@@ -221,7 +221,7 @@ public class KitchenSinkController {
 	    log.info("Schedule a task::" + df.format(date));
 	    if(threadPoolTaskScheduler == null)
 	      log.info("threadPoolTaskScheduler is null");
-	    threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/02 08:17:00"));
+	    threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/02 08:20:00"));
 	}
 
 	@EventMapping
