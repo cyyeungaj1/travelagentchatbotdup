@@ -35,6 +35,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import com.google.common.io.ByteStreams;
 
@@ -47,7 +49,7 @@ import com.linecorp.bot.model.event.message.MessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.LineBotMessages;
-
+import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerExamples;
 
 
 import lombok.NonNull;
@@ -59,7 +61,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class }) // ConnectionManager.class,
-
+// @SpringBootApplication
+// @EnableScheduling
 public class KitchenSinkTester {
 	@Autowired
 	private DatabaseEngine databaseEngine;
@@ -163,6 +166,13 @@ public class KitchenSinkTester {
   //
 	// 	assertThat("abc").isEqualTo("abc");
 	// }
-
+	// @Autowired
+	// private ThreadPoolTaskScheduler taskScheduler;
+	@Test
+  public void schedulerTest() throws Exception {
+      ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
+			// if(taskScheduler == null)
+			// 	log.info("taskscheduler == null");
+  }
 
 }

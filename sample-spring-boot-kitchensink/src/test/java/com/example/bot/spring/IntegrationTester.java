@@ -20,23 +20,23 @@ import org.springframework.context.annotation.Import;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerConfig;
+// import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerConfig;
 import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerExamples;
-// import com.example.bot.spring.IntegrationTester.MyController;
+import com.example.bot.spring.IntegrationTester.MyController;
 // @RunWith(SpringRunner.class)
 // @SpringBootTest(classes = { IntegrationTester.class, MyController.class })
-@Import(ThreadPoolTaskSchedulerConfig.class)
+// @Import(ThreadPoolTaskSchedulerConfig.class)
 @SpringBootApplication
 @EnableScheduling
 
 public class IntegrationTester{
 
 
-  // @RestController
-  //   @Slf4j
-  //   public static class MyController {
-  //
-  //   }
+  @RestController
+    @Slf4j
+    public static class MyController {
+
+    }
 
 
   @Test

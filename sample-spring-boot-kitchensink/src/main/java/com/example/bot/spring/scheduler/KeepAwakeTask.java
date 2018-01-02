@@ -15,6 +15,7 @@ public class KeepAwakeTask {
       log.info("Heroku, awake!!!");
       if(!test){
         ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
+        test = true;
       }
   }
 

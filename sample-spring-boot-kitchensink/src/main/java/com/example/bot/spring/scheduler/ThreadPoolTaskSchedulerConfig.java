@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ComponentScan;
 
 @Configuration
-@ComponentScan(basePackages = "com.example.bot.spring.scheduler", basePackageClasses = {ThreadPoolTaskSchedulerExamples.class})
+// @ComponentScan(basePackages = "com.example.bot.spring.scheduler", basePackageClasses = {ThreadPoolTaskSchedulerExamples.class})
 public class ThreadPoolTaskSchedulerConfig{
   @Bean
   public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
