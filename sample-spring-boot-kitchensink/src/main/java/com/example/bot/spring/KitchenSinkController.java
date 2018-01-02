@@ -37,6 +37,8 @@ import com.linecorp.bot.model.profile.UserProfileResponse;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
+import java.util.Calendar;
+
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,37 +193,17 @@ public class KitchenSinkController {
 		log.info("CreateUser::ID: " + user.getId());
 		log.info("CreateUser::LineId: " + user.getLineId());
 
-		TextMessage textMessage = new TextMessage("hello");
-		PushMessage pushMessage = new PushMessage(
-        userId,
-        textMessage);
-		String responseError = null;
-		try{
-			Response<BotApiResponse> response =
-	    	LineMessagingServiceBuilder
-	            .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
-	            .build()
-	            .pushMessage(pushMessage)
-	            .execute();
-			log.info(response.code() + " " + response.message());
-		}catch(Exception e){
-			responseError = e.toString();
-		}
-		if(responseError != null)
-			log.info("PushMesage::Response::error:" + responseError);
+
 
 		if(threadPoolTaskScheduler == null)
 			log.info("threadPoolTaskScheduler in controller is null");
-		else
-		log.info("threadPoolTaskScheduler in controller is not null");
+		else{
+			log.info("threadPoolTaskScheduler in controller is not null");
+			scheduleTest(userId);
+		}
 
-			Date date = new Date();
-	    DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	    // ThreadPoolTaskScheduler threadPoolTaskScheduler = getTPTS();
-	    log.info("Schedule a task::" + df.format(date));
-	    if(threadPoolTaskScheduler == null)
-	      log.info("threadPoolTaskScheduler is null");
-	    threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec"), transferStringToDate("2018/01/02 08:20:00"));
+
+
 	}
 
 	@EventMapping
@@ -452,17 +434,50 @@ public class KitchenSinkController {
 		      log.info("transferStringToDate::" + parseError);
 		    return date;
 		  }
+
+		public void scheduleTest(String id){
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			// ThreadPoolTaskScheduler threadPoolTaskScheduler = getTPTS();
+			log.info("Schedule a task::" + df.format(date));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.SECOND, 30);
+			if(threadPoolTaskScheduler == null)
+				log.info("threadPoolTaskScheduler is null");
+			threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec", id), cal.getTime());
+		}
 }
 
 
 @Slf4j
 class RunnableTask implements Runnable{
   private String message = null;
-  public RunnableTask(String str){
+	private String userId = null;
+  public RunnableTask(String str, String id){
     message = str;
+		userId = id;
   }
   @Override
   public void run(){
-    log.info("runable task::" + message);
+
+		TextMessage textMessage = new TextMessage("Runnable test");
+		PushMessage pushMessage = new PushMessage(
+        userId,
+        textMessage);
+		String responseError = null;
+		try{
+			Response<BotApiResponse> response =
+	    	LineMessagingServiceBuilder
+	            .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
+	            .build()
+	            .pushMessage(pushMessage)
+	            .execute();
+			log.info(response.code() + " " + response.message());
+		}catch(Exception e){
+			responseError = e.toString();
+		}
+		if(responseError != null)
+			log.info("PushMesage::Response::error:" + responseError);
   }
 }

@@ -15,6 +15,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.Calendar;
+
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -173,6 +178,15 @@ public class KitchenSinkTester {
       // ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
 			// if(taskScheduler == null)
 			// 	log.info("taskscheduler == null");
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			// ThreadPoolTaskScheduler threadPoolTaskScheduler = getTPTS();
+			log.info("curr datetime::" + df.format(date));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.SECOND, 30);
+			date = cal.getTime();
+			log.info("Scheduled datetime::" + df.format(date));
   }
 
 }

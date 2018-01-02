@@ -13,10 +13,10 @@ public class KeepAwakeTask {
   @Scheduled(fixedRate = 60000)
   public void awake() {
       log.info("Heroku, awake!!!");
-      if(!test){
-        ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
-        test = true;
-      }
+      // if(!test){
+      //   ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
+      //   test = true;
+      // }
   }
 
 }
