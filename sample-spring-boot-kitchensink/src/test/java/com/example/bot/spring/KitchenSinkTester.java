@@ -19,7 +19,8 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Calendar;
-
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -188,5 +189,25 @@ public class KitchenSinkTester {
 			date = cal.getTime();
 			log.info("Scheduled datetime::" + df.format(date));
   }
+	@Test
+	public void pingTest() throws Exception {
 
+		String error = null;
+		try{
+			URL url = new URL("https://travelagentchatbot.herokuapp.com/");
+			// URL url = new URL("https://google.com.hk");
+			HttpURLConnection con= (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setConnectTimeout(5000);
+			con.connect();
+
+			int code = con.getResponseCode();
+			log.info("ping code = " + Integer.toString(code));
+		}catch(Exception e){
+			error = e.toString();
+		}
+		if(error != null)
+			log.info("ping::error:" + error);
+
+	}
 }

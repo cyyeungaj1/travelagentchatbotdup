@@ -41,6 +41,6 @@ public class IntegrationTester{
 
   @Test
   public void schedulerTest() throws Exception {
-      ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
+      // ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
   }
 }

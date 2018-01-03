@@ -22,14 +22,17 @@ public class KeepAwakeTask {
   }
 
   public void ping(){
+    String error = null;
     try{
       URL url = new URL("https://travelagentchatbot.herokuapp.com/");
       HttpURLConnection con= (HttpURLConnection) url.openConnection();
       con.setRequestMethod("GET");
-      con.setConnectTimeout(3000);
+      con.setConnectTimeout(5000);
       con.connect();
     }catch(Exception e){
-
+      error = e.toString();
     }
+    if(error != null)
+      log.info("ping::error:" + error);
   }
 }
