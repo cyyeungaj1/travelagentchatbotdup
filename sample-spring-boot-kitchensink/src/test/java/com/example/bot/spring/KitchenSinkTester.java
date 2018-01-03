@@ -194,11 +194,11 @@ public class KitchenSinkTester {
 
 		String error = null;
 		try{
-			URL url = new URL("https://travelagentchatbot.herokuapp.com/");
+			URL url = new URL("http://travelagentchatbot.herokuapp.com/");
 			// URL url = new URL("https://google.com.hk");
 			HttpURLConnection con= (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
-			con.setConnectTimeout(5000);
+			// con.setConnectTimeout(5000);
 			con.connect();
 
 			int code = con.getResponseCode();

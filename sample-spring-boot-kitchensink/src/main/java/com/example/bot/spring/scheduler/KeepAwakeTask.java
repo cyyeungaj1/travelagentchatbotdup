@@ -18,21 +18,22 @@ public class KeepAwakeTask {
       //   ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
       //   test = true;
       // }
-      ping();
+      String error = null;
+      try{
+        URL url = new URL("http://travelagentchatbot.herokuapp.com/");
+        // URL url = new URL("https://google.com.hk");
+        HttpURLConnection con= (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        // con.setConnectTimeout(5000);
+        con.connect();
+      }catch(Exception e){
+        error = e.toString();
+      }
+      if(error != null)
+        log.info("ping::error:" + error);
   }
 
   public void ping(){
-    String error = null;
-    try{
-      URL url = new URL("https://travelagentchatbot.herokuapp.com/");
-      HttpURLConnection con= (HttpURLConnection) url.openConnection();
-      con.setRequestMethod("GET");
-      // con.setConnectTimeout(5000);
-      con.connect();
-    }catch(Exception e){
-      error = e.toString();
-    }
-    if(error != null)
-      log.info("ping::error:" + error);
+
   }
 }
