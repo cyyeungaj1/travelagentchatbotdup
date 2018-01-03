@@ -26,6 +26,9 @@ public class KeepAwakeTask {
         con.setRequestMethod("GET");
         // con.setConnectTimeout(5000);
         con.connect();
+
+        int code = con.getResponseCode();
+        log.info("ping code = " + Integer.toString(code));
       }catch(Exception e){
         error = e.toString();
       }
