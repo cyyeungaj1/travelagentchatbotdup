@@ -5,7 +5,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerExamples;
-
+import java.net.HttpURLConnection;
+import java.net.URL;
 @Slf4j
 @Component
 public class KeepAwakeTask {
@@ -17,6 +18,18 @@ public class KeepAwakeTask {
       //   ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
       //   test = true;
       // }
+      ping();
   }
 
+  public void ping(){
+    try{
+      URL url = new URL("https://travelagentchatbot.herokuapp.com/");
+      HttpURLConnection con= (HttpURLConnection) url.openConnection();
+      con.setRequestMethod("GET");
+      con.setConnectTimeout(3000);
+      con.connect();
+    }catch(Exception e){
+
+    }
+  }
 }
