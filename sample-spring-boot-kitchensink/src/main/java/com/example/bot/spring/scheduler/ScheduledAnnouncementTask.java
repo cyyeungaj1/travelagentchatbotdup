@@ -25,7 +25,7 @@ public class ScheduledAnnouncementTask implements Runnable{
     String managerError = null;
     ArrayList<User> users = null;
     try{
-      mLine.getAllUser();
+      users = mLine.getAllUser();
     }catch(Exception e){
       managerError = e.toString();
       users = new ArrayList<>();
