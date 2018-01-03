@@ -11,7 +11,8 @@ import java.net.URL;
 @Component
 public class KeepAwakeTask {
   boolean test = false;
-  @Scheduled(fixedRate = 60000)
+  // @Scheduled(fixedRate = 60000)
+  @Scheduled(fixedRate = 1200000)
   public void awake() {
       log.info("Heroku, awake!!!");
       // if(!test){
