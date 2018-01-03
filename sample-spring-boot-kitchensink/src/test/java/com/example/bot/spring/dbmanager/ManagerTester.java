@@ -4,6 +4,8 @@ package com.example.bot.spring.dbmanager;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -16,11 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ManagerTester {
-
+  private JDBCLineUserManager mLine = new JDBCLineUserManager();
 
   @Test
 	public void testCreateUser() {
-		JDBCLineUserManager mLine = new JDBCLineUserManager();
+
 		// for(int i = 0; i < 30; ++i){
 		// 	UserFactory uf = new UserFactory();
 		// 	uf.setLineId(Integer.toString(i));
@@ -35,7 +37,7 @@ public class ManagerTester {
 
   @Test
 	public void testDeleteUser() {
-		// JDBCLineUserManager mLine = new JDBCLineUserManager();
+
   	// UserFactory uf = new UserFactory();
 		// uf.setLineId("999");
 		// User user = mLine.createUser(uf.getUser());
@@ -47,5 +49,13 @@ public class ManagerTester {
 
 		assertThat("abc").isEqualTo("abc");
 	}
+
+  @Test
+  public void testGetAllUser() {
+    ArrayList<User> users = mLine.getAllUser();
+    for(int i = 0; i < users.size(); ++i){
+      log.info("testGetAllUser::" + users.get(i).getId() + ", " + users.get(i).getLineId());
+    }
+  }
 
 }

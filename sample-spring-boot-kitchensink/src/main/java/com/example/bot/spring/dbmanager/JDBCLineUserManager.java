@@ -1,10 +1,12 @@
 package com.example.bot.spring.dbmanager;
 import com.example.bot.spring.model.User;
 import com.example.bot.spring.model.UserFactory;
-// import com.example.bot.spring.SQLDatabaseEngine;
+
 import lombok.extern.slf4j.Slf4j;
+
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 @Slf4j
 public class JDBCLineUserManager extends SQLDatabaseEngine{
   private final String USER_ID = "id";
@@ -13,6 +15,24 @@ public class JDBCLineUserManager extends SQLDatabaseEngine{
   public User createUser(User user){
     insertUser(user.getLineId());
     return findUserByLineId(user.getLineId());
+  }
+
+  public ArrayList<User> getAllUser(){
+    String error = null;
+    String sql = "SELECT * FROM line_user";
+    ArrayList<User> result = new ArrayList<>();
+    try{
+      ResultSet rs = selection(sql);
+      while(rs.next())
+        result.add(getRecord(rs));
+    }catch(Exception e){
+      error = e.toString();
+    }
+    if(error != null)
+      log.info("getAllUser::error::" + error);
+    if(result == null)
+      log.info("getAllUser::error::result is null");
+    return result;
   }
   public User findUserByLineId(String line_id){
     String error = null;
@@ -42,7 +62,7 @@ public class JDBCLineUserManager extends SQLDatabaseEngine{
     delete(sql);
   }
 
-  
+
   public User getRecord(ResultSet rs){
     String error = null;
     UserFactory uf = new UserFactory();

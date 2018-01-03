@@ -98,7 +98,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.example.bot.spring.dbmanager.JDBCLineUserManager;
 import com.example.bot.spring.model.User;
 import com.example.bot.spring.model.UserFactory;
-
+import com.example.bot.spring.scheduler.ScheduledAnnouncementTask;
 
 import lombok.NonNull;
 import lombok.Value;
@@ -445,7 +445,9 @@ public class KitchenSinkController {
 			cal.add(Calendar.SECOND, 30);
 			if(threadPoolTaskScheduler == null)
 				log.info("threadPoolTaskScheduler is null");
-			threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec", id), cal.getTime());
+			// threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec", id), cal.getTime());
+			threadPoolTaskScheduler.schedule(new ScheduledAnnouncementTask("testing, run after 30 sec"), cal.getTime());
+
 		}
 }
 

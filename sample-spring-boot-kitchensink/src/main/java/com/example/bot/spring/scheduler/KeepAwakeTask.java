@@ -15,14 +15,10 @@ public class KeepAwakeTask {
   @Scheduled(fixedRate = 1200000)
   public void awake() {
       log.info("Heroku, awake!!!");
-      // if(!test){
-      //   ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
-      //   test = true;
-      // }
+
       String error = null;
       try{
         URL url = new URL("http://travelagentchatbot.herokuapp.com/");
-        // URL url = new URL("https://google.com.hk");
         HttpURLConnection con= (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         // con.setConnectTimeout(5000);
