@@ -210,4 +210,10 @@ public class KitchenSinkTester {
 			log.info("ping::error:" + error);
 
 	}
+  // 
+	// @Test
+	// public void chatbotConTrollerTest(){
+	// 	ChatBotController cbc = new ChatBotController();
+	// 	cbc.schedulePushMsg(null, null);
+	// }
 }

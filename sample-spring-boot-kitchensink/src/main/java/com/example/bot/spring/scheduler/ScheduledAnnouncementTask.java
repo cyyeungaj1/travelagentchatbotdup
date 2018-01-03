@@ -38,20 +38,20 @@ public class ScheduledAnnouncementTask implements Runnable{
       PushMessage pushMessage = new PushMessage(
           users.get(i).getLineId(),
           textMessage);
-          String responseError = null;
-          try{
-            Response<BotApiResponse> response =
-              LineMessagingServiceBuilder
-                    .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
-                    .build()
-                    .pushMessage(pushMessage)
-                    .execute();
-            log.info(response.code() + " " + response.message());
-          }catch(Exception e){
-            responseError = e.toString();
-          }
-          if(responseError != null)
-            log.info("PushMesage::Response::error:" + responseError);
+      String responseError = null;
+      try{
+        Response<BotApiResponse> response =
+          LineMessagingServiceBuilder
+                .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
+                .build()
+                .pushMessage(pushMessage)
+                .execute();
+        log.info(response.code() + " " + response.message());
+      }catch(Exception e){
+        responseError = e.toString();
+      }
+      if(responseError != null)
+        log.info("PushMesage::Response::error:" + responseError);
     }
 
 
