@@ -27,7 +27,7 @@ public class KeepAwakeTask {
       URL url = new URL("https://travelagentchatbot.herokuapp.com/");
       HttpURLConnection con= (HttpURLConnection) url.openConnection();
       con.setRequestMethod("GET");
-      con.setConnectTimeout(5000);
+      // con.setConnectTimeout(5000);
       con.connect();
     }catch(Exception e){
       error = e.toString();
