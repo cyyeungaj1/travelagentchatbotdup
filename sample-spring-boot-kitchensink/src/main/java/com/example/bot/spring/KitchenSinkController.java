@@ -257,8 +257,9 @@ public class KitchenSinkController {
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         // String text = content.getText();
-				String reply = cb.processInput(replyToken, event.getSource().getUserId(), content);
-				this.replyText(replyToken, reply);
+				// String reply = 
+				cb.processInput(replyToken, event.getSource().getUserId(), content);
+				// this.replyText(replyToken, reply);
         // log.info("Got text message from {}: {}", replyToken, text);
         // switch (text) {
 				// 		case "announce":{

@@ -23,22 +23,27 @@ public class ChatBotController{
 
   private HashMap<String, UserInterface> chatroom = new HashMap<String, UserInterface>();
 
-  public String processInput(String replyToken, String id, TextMessageContent content){
+  private UserInterface next = null;
+  public void processInput(String replyToken, String id, TextMessageContent content){
     String text = content.getText();
-    // String userId = event.getSource().getUserId();
     String userId = id;
     if(isNewChatRoom(userId)){
       setInterface(new MenuInterface(userId));
     }
     UserInterface ui = chatroom.get(userId);
     ui.process(text);
-    return ui.getMessage();
+    // String result = ui.getMessage();
+
+    // return result;
   }
 
   public void setInterface(UserInterface userInterface){
     String id = userInterface.getUserId();
-    if(chatroom.containsKey(id))
+    if(chatroom.containsKey(id)){
       chatroom.remove(id);
+      log.info("hashmap remove:" + id);
+    }
+
     userInterface.setController(this);
     chatroom.put(id, userInterface);
   }

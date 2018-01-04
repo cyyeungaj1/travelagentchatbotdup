@@ -22,12 +22,13 @@ public class UserInterface{
   public UserInterface(ChatBotController c){
     controller = c;
   }
+  public UserInterface(String id){
+    userId = id;
+  }
   public void process(String text){
+    log.info("input::" + text);
     state.process(text);
   }
-
-  public String getMessage(){return message;}
-  public void setMessage(String str){message = str;}
 
   public State getState(){return state;}
   public void setState(State s){state = s;}
@@ -43,30 +44,27 @@ public class UserInterface{
   }
 
   public void push(String msg){
-    if(userId == null)
-      return;
-    TextMessage textMessage = new TextMessage(msg);
-    PushMessage pushMessage = new PushMessage(
-      userId,
-      textMessage);
-    String responseError = null;
-    try{
-      Response<BotApiResponse> response =
-        LineMessagingServiceBuilder
-              .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
-              .build()
-              .pushMessage(pushMessage)
-              .execute();
-      log.info(response.code() + " " + response.message());
-    }catch(Exception e){
-      responseError = e.toString();
-    }
-    if(responseError != null)
-      log.info("PushMesage::Response::error:" + responseError);
-  }
-
-  public void test_push(String str){
-    log.info("push::" + str);
+    log.info("push::" + msg);
+    // if(userId == null)
+    //   return;
+    // TextMessage textMessage = new TextMessage(msg);
+    // PushMessage pushMessage = new PushMessage(
+    //   userId,
+    //   textMessage);
+    // String responseError = null;
+    // try{
+    //   Response<BotApiResponse> response =
+    //     LineMessagingServiceBuilder
+    //           .create("GknCtoyZkwyQjuLdv0blW1PN+mo92OQUU4lbSKXkt0vlioR/f/Z6GS0XjCWYGqpnfvhHhXLJ6t8c5pyvEWkTgZGI4dFKpCjkZXxhdVwQActmCqU+rI1tGsodnYBlRfP9s940G04I4bbR74YcbGgbTwdB04t89/1O/w1cDnyilFU=")
+    //           .build()
+    //           .pushMessage(pushMessage)
+    //           .execute();
+    //   log.info(response.code() + " " + response.message());
+    // }catch(Exception e){
+    //   responseError = e.toString();
+    // }
+    // if(responseError != null)
+    //   log.info("PushMesage::Response::error:" + responseError);
   }
 
   public static int convertStringToInt(String str){
