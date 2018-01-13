@@ -12,7 +12,6 @@ public class AnnouncementInterface extends UserInterface{
 
   private Date date = null;
   private String content = null;
-  private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
   public void setDate(Date d){date = d;}
   public void setContent(String str){content = str;}
 
@@ -30,11 +29,9 @@ public class AnnouncementInterface extends UserInterface{
       return;
     }
     Date herokuTime = HKDate.convertToHerokuTime(date);
-    push("Scheduled Announcement: \n\tTime: " + df.format(date) + "\n\tContent: " + content);
+    push("Scheduled Announcement: \n\tTime: " + HKDate.dateFormat.format(date) + "\n\tContent: " + content);
     Runnable task = new ScheduledAnnouncementTask(content);
-
     controller.schedulePushMsg(task, herokuTime);
-
     setInterface(new MenuInterface(getUserId()));
   }
 
@@ -44,14 +41,16 @@ public class AnnouncementInterface extends UserInterface{
 @Slf4j
 class ParseDateTime extends State{
   private final String flag = "ParseDateTime";
-  // private Date date = new Date();
-  private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+  public ParseDateTime(UserInterface ui){
+    super(ui);
+  }
 
   public Date checkValidateDate(String str){
     String error = null;
     Date d = null;
     try{
-      d = df.parse(str);
+      d = HKDate.dateFormat.parse(str);
     }catch(Exception e){
       error = e.toString();
       return null;
@@ -66,10 +65,6 @@ class ParseDateTime extends State{
     return false;
   }
 
-  public ParseDateTime(UserInterface ui){
-    super(ui);
-  }
-
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
     Date date = checkValidateDate(text);
@@ -78,13 +73,12 @@ class ParseDateTime extends State{
       return;
     }
 
-    // Date date = df.parse(text);
     if(!checkAfterCurr(date))
     {
       aUi.push("Please enter AFTER current date");
       return;
     }
-    aUi.push("Valid date: " + df.format(date));
+    aUi.push("Valid date: " + HKDate.dateFormat.format(date));
     aUi.setDate(date);
     aUi.setState(new EnterContent(aUi));
   }
@@ -98,8 +92,7 @@ class ParseDateTime extends State{
 @Slf4j
 class EnterContent extends State{
   private final String flag = "EnterContent";
-
-
+  
   public EnterContent(UserInterface ui){
     super(ui);
     ui.push("Please Enter the content");
@@ -109,8 +102,6 @@ class EnterContent extends State{
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
     log.info("Content" + text);
     aUi.setContent(text);
-    // aUi.push("Scheduled a announcement");
-    // ui.setInterface(new MenuInterface(ui.getUserId()));
     aUi.scheduleAnnouncement();
   }
 
@@ -124,13 +115,12 @@ class EnterContent extends State{
 class HKDate{
   /*heroku server system time + 8 = hong kong local time*/
   private static final int DELAY = 8;
-  // private static Calendar calendar = Calendar.getInstance();
-  public static DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+  public static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
   public static Date getCurrentTime(){
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.HOUR, DELAY);
     Date result = calendar.getTime();
-    log.info("HKDate::current: " + df.format(result));
+    log.info("HKDate::current: " + dateFormat.format(result));
     return result;
   }
 
@@ -139,70 +129,8 @@ class HKDate{
     calendar.setTime(d);
     calendar.add(Calendar.HOUR, -DELAY);
     Date result = calendar.getTime();
-    log.info("HKDate::convertToHerokuTime: " + df.format(result));
+    log.info("HKDate::convertToHerokuTime: " + dateFormat.format(result));
     return calendar.getTime();
   }
 
 }
-
-// class AskYear implements State{
-//   private final String flag = "year";
-//   public AskYear(){
-//
-//   }
-//   @Override
-//   public String process(String text){
-//     return text;
-//   }
-//   @Override
-//   public String getFlag(){
-//     return flag;
-//   }
-// }
-//
-// class AskMonth implements State{
-//   private final String flag = "month";
-//   @Override
-//   public String process(String text){
-//     return text;
-//   }
-//   @Override
-//   public String getFlag(){
-//     return flag;
-//   }
-// }
-// class AskDay implements State{
-//   private final String flag = "day";
-//   @Override
-//   public String process(String text){
-//     return text;
-//   }
-//   @Override
-//   public String getFlag(){
-//     return flag;
-//   }
-// }
-//
-// class AskHour implements State{
-//   private final String flag = "hour";
-//   @Override
-//   public String process(String text){
-//     return text;
-//   }
-//   @Override
-//   public String getFlag(){
-//     return flag;
-//   }
-// }
-//
-// class AskMin implements State{
-//   private final String flag = "min";
-//   @Override
-//   public String process(String text){
-//     return text;
-//   }
-//   @Override
-//   public String getFlag(){
-//     return flag;
-//   }
-// }

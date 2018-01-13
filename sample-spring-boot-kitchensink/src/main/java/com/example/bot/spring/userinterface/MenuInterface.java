@@ -3,18 +3,33 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MenuInterface extends UserInterface{
-
-  public MenuInterface(String id){
-    super(id);
-
-    state = new ChooseSection(this);
-    push("Menu:\n1.\tAnnouncement");
-    log.info("MenuInterface");
-  }
+  public static final int INIT = 1;
   public MenuInterface(String id, int i){
     userId = id;
+    state = new InitState(this);
+    push("Welcome~\nMenu:\n1.\tAnnouncement");
+  }
+  public MenuInterface(String id){
+    super(id);
     state = new ChooseSection(this);
-    log.info("MenuInterface2");
+    push("Menu:\n1.\tAnnouncement");
+  }
+}
+
+
+@Slf4j
+class InitState extends State{
+  private final String flag = "InitState";
+
+  public InitState(UserInterface ui){
+    super(ui);
+  }
+  public void process(String text){
+    ui.setState(new ChooseSection(ui));
+  }
+
+  public String getFlag(){
+    return flag;
   }
 }
 
@@ -26,7 +41,6 @@ class ChooseSection extends State{
     super(ui);
   }
   public void process(String text){
-    // String error = null;
     int choice = UserInterface.convertStringToInt(text);
     switch(choice){
       case 1:{

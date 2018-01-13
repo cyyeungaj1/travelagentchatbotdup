@@ -180,6 +180,7 @@ public class KitchenSinkController {
 		String userId = event.getSource().getUserId();
 		User user = mLine.findUserByLineId(userId);
 		mLine.deleteUser(user);
+		cb.removeChatRoom(userId);
 	}
 
 	@EventMapping
@@ -425,19 +426,19 @@ public class KitchenSinkController {
     }
 
 
-		public Date transferStringToDate(String str){
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		    String parseError = null;
-		    Date date = null;
-		    try{
-		      date = sdf.parse(str.toString());
-		    }catch(Exception e){
-		      parseError = e.toString();
-		    }
-		    if(parseError != null)
-		      log.info("transferStringToDate::" + parseError);
-		    return date;
-		  }
+		// public Date transferStringToDate(String str){
+		//     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		//     String parseError = null;
+		//     Date date = null;
+		//     try{
+		//       date = sdf.parse(str.toString());
+		//     }catch(Exception e){
+		//       parseError = e.toString();
+		//     }
+		//     if(parseError != null)
+		//       log.info("transferStringToDate::" + parseError);
+		//     return date;
+		//   }
 
 		public void scheduleTest(String id){
 			Date date = new Date();
@@ -446,11 +447,10 @@ public class KitchenSinkController {
 			log.info("Schedule a task::" + df.format(date));
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
-			cal.add(Calendar.SECOND, 30);
+			cal.add(Calendar.SECOND, 5);
 			if(threadPoolTaskScheduler == null)
 				log.info("threadPoolTaskScheduler is null");
-			// threadPoolTaskScheduler.schedule(new RunnableTask("testing, run after 30 sec", id), cal.getTime());
-			threadPoolTaskScheduler.schedule(new ScheduledAnnouncementTask("testing, run after 30 sec"), cal.getTime());
+			threadPoolTaskScheduler.schedule(new ScheduledAnnouncementTask("Thank you for using our chatbot"), cal.getTime());
 
 		}
 }
