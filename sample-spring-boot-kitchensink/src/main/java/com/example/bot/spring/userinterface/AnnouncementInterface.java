@@ -124,15 +124,22 @@ class EnterContent extends State{
 class HKDate{
   /*heroku server system time + 8 = hong kong local time*/
   private static final int DELAY = 8;
-  private static Calendar calendar = Calendar.getInstance();
+  // private static Calendar calendar = Calendar.getInstance();
+  public static DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
   public static Date getCurrentTime(){
+    Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.HOUR, DELAY);
-    return calendar.getTime();
+    Date result = calendar.getTime();
+    log.info("HKDate::current: " + df.format(result));
+    return result;
   }
 
   public static Date convertToHerokuTime(Date d){
+    Calendar calendar = Calendar.getInstance();
     calendar.setTime(d);
     calendar.add(Calendar.HOUR, -DELAY);
+    Date result = calendar.getTime();
+    log.info("HKDate::convertToHerokuTime: " + df.format(result));
     return calendar.getTime();
   }
 
