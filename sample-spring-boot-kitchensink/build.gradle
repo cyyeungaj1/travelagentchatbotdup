@@ -16,9 +16,11 @@
 
 apply plugin: 'org.springframework.boot'
 
+
 dependencies {
     compile project(':line-bot-spring-boot')
     compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+     compile 'ai.api:libai:1.6.12'
 }
 
 test {

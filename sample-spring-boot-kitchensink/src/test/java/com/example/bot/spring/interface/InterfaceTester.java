@@ -16,6 +16,11 @@ import com.example.bot.spring.ChatBotController;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+import ai.api.AIConfiguration;
+import ai.api.AIDataService;
+import ai.api.model.AIRequest;
+import ai.api.model.AIResponse;
+
 @Slf4j
 public class InterfaceTester{
   ChatBotController controller = new ChatBotController();
@@ -38,9 +43,23 @@ public class InterfaceTester{
   }
 
   @Test
-  public void testHKTime() {
+  public void testNLP() {
+    String error = null;
+    try {
+      AIConfiguration configuration = new AIConfiguration("25537dd6c15f44148cd489334c15293d");
+      AIDataService dataService = new AIDataService(configuration);
+      AIRequest request = new AIRequest("i want to announce");
+      AIResponse response = dataService.request(request);
+      if (response.getStatus().getCode() == 200) {
+        log.info(response.getResult().getFulfillment().getSpeech());
+      } else {
+        log.info(response.getStatus().getErrorDetails());
+      }
+    } catch (Exception ex) {
+      error = ex.toString();
+    }
 
-
-
+    if(error != null)
+      log.info("testNLP::error::" + error);
   }
 }

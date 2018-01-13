@@ -16,6 +16,8 @@ import com.example.bot.spring.userinterface.MenuInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+
+
 @Slf4j
 @Component
 public class ChatBotController{
@@ -23,6 +25,7 @@ public class ChatBotController{
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
   private HashMap<String, UserInterface> chatroom = new HashMap<String, UserInterface>();
   private UserInterface next = null;
+
 
   public void processInput(String replyToken, String id, TextMessageContent content){
     String text = content.getText();
@@ -43,7 +46,7 @@ public class ChatBotController{
     userInterface.setController(this);
     chatroom.put(id, userInterface);
   }
-  
+
   public void removeChatRoom(String id){
     if(chatroom.containsKey(id)){
       chatroom.remove(id);
