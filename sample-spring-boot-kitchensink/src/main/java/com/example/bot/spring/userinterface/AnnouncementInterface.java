@@ -2,7 +2,7 @@ package com.example.bot.spring.userinterface;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
-
+import java.util.Calendar;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.bot.spring.scheduler.ScheduledAnnouncementTask;
@@ -12,6 +12,7 @@ public class AnnouncementInterface extends UserInterface{
 
   private Date date = null;
   private String content = null;
+  private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
   public void setDate(Date d){date = d;}
   public void setContent(String str){content = str;}
 
@@ -28,8 +29,13 @@ public class AnnouncementInterface extends UserInterface{
       setInterface(new AnnouncementInterface(getUserId()));
       return;
     }
+    Date herokuTime = HKDate.convertToHerokuTime(date);
+    push("Scheduled Announcement: \n\tTime: " + df.format(date) + "\n\tContent: " + content);
     Runnable task = new ScheduledAnnouncementTask(content);
-    controller.schedulePushMsg(task, date);
+
+    controller.schedulePushMsg(task, herokuTime);
+
+    setInterface(new MenuInterface(getUserId()));
   }
 
 }
@@ -38,7 +44,7 @@ public class AnnouncementInterface extends UserInterface{
 @Slf4j
 class ParseDateTime extends State{
   private final String flag = "ParseDateTime";
-  private Date date = new Date();
+  // private Date date = new Date();
   private DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
   public Date checkValidateDate(String str){
@@ -54,7 +60,7 @@ class ParseDateTime extends State{
   }
 
   public boolean checkAfterCurr(Date d){
-    Date date = new Date();
+    Date date = HKDate.getCurrentTime();
     if(d.after(date))
       return true;
     return false;
@@ -65,8 +71,6 @@ class ParseDateTime extends State{
   }
 
   public void process(String text){
-    // ui.push("process date");
-    // ui.setInterface(new MenuInterface(ui.getUserId()));
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
     Date date = checkValidateDate(text);
     if(date == null){
@@ -103,14 +107,35 @@ class EnterContent extends State{
 
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
+    log.info("Content" + text);
     aUi.setContent(text);
-    aUi.push("Scheduled a announcement");
-    ui.setInterface(new MenuInterface(ui.getUserId()));
+    // aUi.push("Scheduled a announcement");
+    // ui.setInterface(new MenuInterface(ui.getUserId()));
+    aUi.scheduleAnnouncement();
   }
 
   public String getFlag(){
     return flag;
   }
+}
+
+
+@Slf4j
+class HKDate{
+  /*heroku server system time + 8 = hong kong local time*/
+  private static final int DELAY = 8;
+  private static Calendar calendar = Calendar.getInstance();
+  public static Date getCurrentTime(){
+    calendar.add(Calendar.HOUR, DELAY);
+    return calendar.getTime();
+  }
+
+  public static Date convertToHerokuTime(Date d){
+    calendar.setTime(d);
+    calendar.add(Calendar.HOUR, -DELAY);
+    return calendar.getTime();
+  }
+
 }
 
 // class AskYear implements State{

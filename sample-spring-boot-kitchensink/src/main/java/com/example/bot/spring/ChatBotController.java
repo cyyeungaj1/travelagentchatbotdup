@@ -27,6 +27,9 @@ public class ChatBotController{
   public void processInput(String replyToken, String id, TextMessageContent content){
     String text = content.getText();
     String userId = id;
+    if(text.equals("/menu")){
+      setInterface(new MenuInterface(userId));
+    }
     if(isNewChatRoom(userId)){
       setInterface(new MenuInterface(userId));
     }

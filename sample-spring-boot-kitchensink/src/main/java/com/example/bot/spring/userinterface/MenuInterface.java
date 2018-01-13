@@ -49,21 +49,3 @@ class ChooseSection extends State{
     return flag;
   }
 }
-
-//
-// @Slf4j
-// class InitChoice extends State{
-//   private final String flag = "InitChoice";
-//
-//   public InitChoice(UserInterface ui){
-//     super(ui);
-//
-//   }
-//   public void process(String text){
-//     ui.setState(new ChooseSection(ui));
-//   }
-//
-//   public String getFlag(){
-//     return flag;
-//   }
-// }
