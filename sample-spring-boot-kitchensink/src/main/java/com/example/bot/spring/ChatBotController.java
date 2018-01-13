@@ -14,9 +14,10 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.example.bot.spring.userinterface.UserInterface;
 import com.example.bot.spring.userinterface.MenuInterface;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class ChatBotController{
   @Autowired
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;

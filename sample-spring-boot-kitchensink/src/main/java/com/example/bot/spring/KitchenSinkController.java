@@ -112,7 +112,8 @@ import java.net.URI;
 @LineMessageHandler
 public class KitchenSinkController {
 
-
+	@Autowired
+	private ChatBotController cb;
 	@Autowired
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 	@Autowired
@@ -253,11 +254,11 @@ public class KitchenSinkController {
 	private void handleSticker(String replyToken, StickerMessageContent content) {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
-	private ChatBotController cb = new ChatBotController();
+	// private ChatBotController cb = new ChatBotController();
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         // String text = content.getText();
-				// String reply = 
+				// String reply =
 				cb.processInput(replyToken, event.getSource().getUserId(), content);
 				// this.replyText(replyToken, reply);
         // log.info("Got text message from {}: {}", replyToken, text);
