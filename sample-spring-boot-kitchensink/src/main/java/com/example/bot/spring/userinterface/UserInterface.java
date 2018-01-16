@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import retrofit2.Response;
 
+
 @Slf4j
 public class UserInterface{
   protected String userId = null;
@@ -25,6 +26,9 @@ public class UserInterface{
   public UserInterface(String id){
     userId = id;
   }
+
+
+
   public void process(String text){
     log.info("input::" + text);
     state.process(text);

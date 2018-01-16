@@ -6,19 +6,24 @@ import java.util.Calendar;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.bot.spring.scheduler.ScheduledAnnouncementTask;
-
+import com.example.bot.spring.model.NLPChatRoom;
 @Slf4j
 public class AnnouncementInterface extends UserInterface{
+  public static final String ANNOUNCE_SECTION = "announce.announce";
 
   private Date date = null;
   private String content = null;
+  public NLPChatRoom nlpChatRoom = null;
+
   public void setDate(Date d){date = d;}
   public void setContent(String str){content = str;}
 
   public AnnouncementInterface(String id){
     super(id);
     push("Announcement Section");
-    push("Please Enter DateTime (yyyy/MM/dd hh:mm:ss)");
+    nlpChatRoom = new NLPChatRoom(id);
+    nlpChatRoom.query("i want to announce");
+    push(nlpChatRoom.query("i want to announce").getReply());
     state = new ParseDateTime(this);
   }
 
@@ -35,13 +40,20 @@ public class AnnouncementInterface extends UserInterface{
     setInterface(new MenuInterface(getUserId()));
   }
 
+  public void expire(){
+    setInterface(new MenuInterface(getUserId()));
+  }
 }
 
 
 @Slf4j
 class ParseDateTime extends State{
   private final String flag = "ParseDateTime";
-
+  private final String PREV = "announce-followup";
+  private final String CURR = "announce-ask-datetime-followup";
+  private final String ACTION = "announce.announce-save-datetime";
+  private final String DATE = "date.original";
+  private final String TIME = "time.original";
   public ParseDateTime(UserInterface ui){
     super(ui);
   }
@@ -67,20 +79,33 @@ class ParseDateTime extends State{
 
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
-    Date date = checkValidateDate(text);
-    if(date == null){
-      aUi.push("Invalid format");
+    NLPParser n = ui.nlpChatRoom.query(str);
+    if(n.getLifespan(PREV) == -1){
+      log.info("expire");
+      aUi.expire();
       return;
+    }
+    if(n.getAction().equals(ACTION)){
+      // Map<String, JsonElement> parameters = n2.getParameter(context2);
+      // String date1 = parameters.get(para1).getAsString();
+      // String time = parameters.get(para2).getAsString();
+      // log.info("test::" + date + " " + time + "00")
+      Date date = checkValidateDate(date1 + " " + time + "00");
+      if(date == null){
+        aUi.push("Invalid format");
+        return;
+      }
+
+      if(!checkAfterCurr(date))
+      {
+        aUi.push("Please enter AFTER current date");
+        return;
+      }
+      aUi.push("Valid date: " + HKDate.dateFormat.format(date));
+      aUi.setDate(date);
+      aUi.setState(new EnterContent(aUi));
     }
 
-    if(!checkAfterCurr(date))
-    {
-      aUi.push("Please enter AFTER current date");
-      return;
-    }
-    aUi.push("Valid date: " + HKDate.dateFormat.format(date));
-    aUi.setDate(date);
-    aUi.setState(new EnterContent(aUi));
   }
 
   public String getFlag(){
@@ -92,7 +117,7 @@ class ParseDateTime extends State{
 @Slf4j
 class EnterContent extends State{
   private final String flag = "EnterContent";
-  
+
   public EnterContent(UserInterface ui){
     super(ui);
     ui.push("Please Enter the content");

@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MenuInterface extends UserInterface{
   public static final int INIT = 1;
+
+
   public MenuInterface(String id, int i){
     userId = id;
     state = new InitState(this);
