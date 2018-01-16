@@ -1,11 +1,19 @@
 package com.example.bot.spring.userinterface;
 import java.util.Date;
+import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Calendar;
 import lombok.extern.slf4j.Slf4j;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
+
 import com.example.bot.spring.scheduler.ScheduledAnnouncementTask;
+import com.example.bot.spring.NLPParser;
 import com.example.bot.spring.model.NLPChatRoom;
 @Slf4j
 public class AnnouncementInterface extends UserInterface{
@@ -79,17 +87,17 @@ class ParseDateTime extends State{
 
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
-    NLPParser n = ui.nlpChatRoom.query(str);
+    NLPParser n = aUi.nlpChatRoom.query(text);
     if(n.getLifespan(PREV) == -1){
       log.info("expire");
       aUi.expire();
       return;
     }
     if(n.getAction().equals(ACTION)){
-      // Map<String, JsonElement> parameters = n2.getParameter(context2);
-      // String date1 = parameters.get(para1).getAsString();
-      // String time = parameters.get(para2).getAsString();
-      // log.info("test::" + date + " " + time + "00")
+      Map<String, JsonElement> parameters = n.getParameter(CURR);
+      String date1 = parameters.get(DATE).getAsString();
+      String time = parameters.get(TIME).getAsString();
+      log.info("test::" + date1 + " " + time + "00");
       Date date = checkValidateDate(date1 + " " + time + "00");
       if(date == null){
         aUi.push("Invalid format");
