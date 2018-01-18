@@ -126,61 +126,68 @@ public class InterfaceTester{
   // }
 
 
+  // @Test
+  // public void testNLP4() {
+  //   NLPChatRoom nlpChatRoom = new NLPChatRoom("111");
+  //   nlpChatRoom.resetAll();
+  //   //1. i want to announce
+  //   final String action1 = "announce.announce";
+  //   final String context1 = "announce-followup";
+  //   NLPParser n1 = nlpChatRoom.query("i want to announce");
+  //   log.info("1. i want to announce");
+  //   if(n1.getAction().equals(action1)){
+  //     log.info("action: " + action1);
+  //   }else{
+  //     log.info("session 1 fail");
+  //   }
+  //   log.info("ans. " + n1.getReply());
+  //
+  //   //2. 2018-01-06 10:10:10
+  //   final String action2 = "announce.announce-save-datetime";
+  //   final String context2 = "announce-ask-datetime-followup";
+  //   NLPParser n2 = nlpChatRoom.query("2018-01-06 10:10:10");
+  //   log.info("2. 2018-01-06 10:10:10");
+  //   if(n2.getAction().equals(action2)){
+  //     final String para1 = "date.original";
+  //     final String para2 = "time.original";
+  //     Map<String, JsonElement> parameters = n2.getParameter(context2);
+  //     String date = parameters.get(para1).getAsString();
+  //     String time = parameters.get(para2).getAsString();
+  //     log.info("para1: " + date);
+  //     log.info("para2: " + time);
+  //   }else{
+  //     log.info("session 2 fails");
+  //     log.info("n2: " + n2.getAction());
+  //     log.info("this: " + action2);
+  //   }
+  //   log.info("ans. " + n2.getReply());
+  //
+  //   //3. content
+  //   final String action3 = "announce.announce-save-content";
+  //   final String context3 = "announce-ask-content-followup";
+  //   NLPParser n3 = nlpChatRoom.query("content is content");
+  //   log.info("3. content");
+  //   if(n3.getAction().equals(action3)){
+  //     final String para1 = "content.original";
+  //     Map<String, JsonElement> parameters = n3.getParameter(context3);
+  //     String content = parameters.get(para1).getAsString();
+  //     log.info("para1: " + content);
+  //   }else{
+  //     log.info("session 3 fails");
+  //   }
+  //   log.info("ans. " + n3.getReply());
+  //
+  //
+  // }
+
   @Test
-  public void testNLP4() {
-    NLPChatRoom nlpChatRoom = new NLPChatRoom("111");
-    nlpChatRoom.resetAll();
-    //1. i want to announce
-    final String action1 = "announce.announce";
-    final String context1 = "announce-followup";
-    NLPParser n1 = nlpChatRoom.query("i want to announce");
-    log.info("1. i want to announce");
-    if(n1.getAction().equals(action1)){
-      log.info("action: " + action1);
-    }else{
-      log.info("session 1 fail");
-    }
-    log.info("ans. " + n1.getReply());
-
-    //2. 2018-01-06 10:10:10
-    final String action2 = "announce.announce-save-datetime";
-    final String context2 = "announce-ask-datetime-followup";
-    NLPParser n2 = nlpChatRoom.query("2018-01-06 10:10:10");
-    log.info("2. 2018-01-06 10:10:10");
-    if(n2.getAction().equals(action2)){
-      final String para1 = "date.original";
-      final String para2 = "time.original";
-      Map<String, JsonElement> parameters = n2.getParameter(context2);
-      String date = parameters.get(para1).getAsString();
-      String time = parameters.get(para2).getAsString();
-      log.info("para1: " + date);
-      log.info("para2: " + time);
-    }else{
-      log.info("session 2 fails");
-      log.info("n2: " + n2.getAction());
-      log.info("this: " + action2);
-    }
-    log.info("ans. " + n2.getReply());
-
-    //3. content
-    final String action3 = "announce.announce-save-content";
-    final String context3 = "announce-ask-content-followup";
-    NLPParser n3 = nlpChatRoom.query("content is content");
-    log.info("3. content");
-    if(n3.getAction().equals(action3)){
-      final String para1 = "content.original";
-      Map<String, JsonElement> parameters = n3.getParameter(context3);
-      String content = parameters.get(para1).getAsString();
-      log.info("para1: " + content);
-    }else{
-      log.info("session 3 fails");
-    }
-    log.info("ans. " + n3.getReply());
-
+  public void testNLPMenu() {
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "hi"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "i want to announce"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "2018/01/20 18:00:00"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "this is the content kiki"));
 
   }
-
-  
 
 
   public void showMetadata(Result result){

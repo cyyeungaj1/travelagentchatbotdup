@@ -6,7 +6,8 @@ import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 
 import com.example.bot.spring.ChatBotController;
-
+import com.example.bot.spring.NLPParser;
+import com.example.bot.spring.model.NLPChatRoom;
 import lombok.extern.slf4j.Slf4j;
 
 import retrofit2.Response;
@@ -18,13 +19,15 @@ public class UserInterface{
   protected State state = null;
   protected String message = null;
   protected ChatBotController controller = null;
+  public NLPChatRoom nlpChatRoom = null;
 
   public UserInterface(){}
-  public UserInterface(ChatBotController c){
-    controller = c;
-  }
+  // public UserInterface(ChatBotController c){
+  //   controller = c;
+  // }
   public UserInterface(String id){
     userId = id;
+    nlpChatRoom = new NLPChatRoom(id);
   }
 
 
@@ -38,7 +41,10 @@ public class UserInterface{
   public void setState(State s){state = s;}
 
   public String getUserId(){return userId;}
-  public void setUserId(String id){userId = id;}
+  public void setUserId(String id){
+    userId = id;
+    nlpChatRoom = new NLPChatRoom(id);
+  }
 
   public void setController(ChatBotController c){controller = c;}
 
@@ -47,6 +53,13 @@ public class UserInterface{
     controller.setInterface(userInterface);
   }
 
+  public void expire(){
+    setInterface(new MenuInterface(getUserId()));
+  }
+
+  // public void push(String msg){
+  //   log.info("push::" + msg);
+  // }
   public void push(String msg){
     log.info("push::" + msg);
     if(userId == null)

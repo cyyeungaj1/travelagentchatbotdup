@@ -1,13 +1,16 @@
 package com.example.bot.spring.userinterface;
 import lombok.extern.slf4j.Slf4j;
 
+import com.example.bot.spring.NLPParser;
+import com.example.bot.spring.model.NLPChatRoom;
+
 @Slf4j
 public class MenuInterface extends UserInterface{
   public static final int INIT = 1;
 
 
   public MenuInterface(String id, int i){
-    userId = id;
+    super(id);
     state = new InitState(this);
     push("Welcome~\nMenu:\n1.\tAnnouncement");
   }
@@ -43,22 +46,28 @@ class ChooseSection extends State{
     super(ui);
   }
   public void process(String text){
-    int choice = UserInterface.convertStringToInt(text);
-    switch(choice){
-      case 1:{
-        ui.push("Annoucement");
-        ui.setInterface(new AnnouncementInterface(ui.getUserId()));
-        break;
-      }
-      case -1:{
-        ui.push("Invalid input, try again");
-        break;
-      }
-      default:{
-        ui.push("Invalid input, try again2");
-        break;
-      }
+    // int choice = UserInterface.convertStringToInt(text);
+    NLPParser p = ui.nlpChatRoom.query(text);
+    ui.push(p.getReply());
+    if(p.getAction().equals(AnnouncementInterface.ANNOUNCE_SECTION)){
+      ui.setInterface(new AnnouncementInterface(ui.getUserId()));
     }
+    // switch(choice){
+    //   case 1:{
+    //     ui.push("Annoucement");
+    //
+    //
+    //     break;
+    //   }
+    //   case -1:{
+    //     ui.push("Invalid input, try again");
+    //     break;
+    //   }
+    //   default:{
+    //     ui.push("Invalid input, try again2");
+    //     break;
+    //   }
+    // }
   }
 
   public String getFlag(){

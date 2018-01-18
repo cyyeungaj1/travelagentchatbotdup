@@ -26,6 +26,7 @@ public class NLPChatRoom{
     try {
       configuration = new AIConfiguration("25537dd6c15f44148cd489334c15293d");
       dataService = new AIDataService(configuration);
+      resetAll();
     } catch (Exception ex) {
       error = ex.toString();
     }

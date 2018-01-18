@@ -21,7 +21,7 @@ public class AnnouncementInterface extends UserInterface{
 
   private Date date = null;
   private String content = null;
-  public NLPChatRoom nlpChatRoom = null;
+  // public NLPChatRoom nlpChatRoom = null;
 
   public void setDate(Date d){date = d;}
   public void setContent(String str){content = str;}
@@ -29,9 +29,6 @@ public class AnnouncementInterface extends UserInterface{
   public AnnouncementInterface(String id){
     super(id);
     push("Announcement Section");
-    nlpChatRoom = new NLPChatRoom(id);
-    nlpChatRoom.query("i want to announce");
-    push(nlpChatRoom.query("i want to announce").getReply());
     state = new ParseDateTime(this);
   }
 
@@ -48,9 +45,7 @@ public class AnnouncementInterface extends UserInterface{
     setInterface(new MenuInterface(getUserId()));
   }
 
-  public void expire(){
-    setInterface(new MenuInterface(getUserId()));
-  }
+
 }
 
 
@@ -86,34 +81,37 @@ class ParseDateTime extends State{
   }
 
   public void process(String text){
+
+    // if(n.getAction().equals(ACTION)){
+    //   Map<String, JsonElement> parameters = n.getParameter(CURR);
+    //   String date1 = parameters.get(DATE).getAsString();
+    //   String time = parameters.get(TIME).getAsString();
+    //   log.info("test::" + date1 + " " + time + "00");
+    //
+    // }
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
-    NLPParser n = aUi.nlpChatRoom.query(text);
-    if(n.getLifespan(PREV) == -1){
-      log.info("expire");
-      aUi.expire();
+    Date date = checkValidateDate(text);
+    if(date == null){
+      aUi.push("Invalid format");
       return;
     }
-    if(n.getAction().equals(ACTION)){
-      Map<String, JsonElement> parameters = n.getParameter(CURR);
-      String date1 = parameters.get(DATE).getAsString();
-      String time = parameters.get(TIME).getAsString();
-      log.info("test::" + date1 + " " + time + "00");
-      Date date = checkValidateDate(date1 + " " + time + "00");
-      if(date == null){
-        aUi.push("Invalid format");
-        return;
-      }
 
-      if(!checkAfterCurr(date))
-      {
-        aUi.push("Please enter AFTER current date");
-        return;
-      }
-      aUi.push("Valid date: " + HKDate.dateFormat.format(date));
-      aUi.setDate(date);
-      aUi.setState(new EnterContent(aUi));
+    if(!checkAfterCurr(date))
+    {
+      aUi.push("Please enter AFTER current date");
+      return;
     }
 
+    String result = HKDate.dateFormat.format(date);
+    NLPParser p = ui.nlpChatRoom.query(result);
+
+    aUi.push(p.getReply());
+    if(p.getAction().equals(ACTION)){
+      aUi.setDate(date);
+      aUi.setState(new EnterContent(aUi));
+    }else{
+      aUi.push("something went wrong...");
+    }
   }
 
   public String getFlag(){
@@ -134,7 +132,9 @@ class EnterContent extends State{
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
     log.info("Content" + text);
+    NLPParser p = ui.nlpChatRoom.query(text);
     aUi.setContent(text);
+    ui.push(p.getReply());
     aUi.scheduleAnnouncement();
   }
 
