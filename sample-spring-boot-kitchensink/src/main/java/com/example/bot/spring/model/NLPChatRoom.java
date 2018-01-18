@@ -45,6 +45,8 @@ public class NLPChatRoom{
       log.info("NLP testing:" + userId + "::"+str);
       AIResponse response = dataService.request(request);
       p = new NLPParser(response);
+      log.info("NLP testing: " + userId + "::");
+      p.getAllContextInfo();
       // log.info("action: " + p.getAction());
       // log.info("reply: " + p.getReply());
       // p.getAllContextInfo();
@@ -59,15 +61,20 @@ public class NLPChatRoom{
   }
 
   public void resetAll(){
-    configuration = new AIConfiguration("25537dd6c15f44148cd489334c15293d");
-    dataService = new AIDataService(configuration);
+    // configuration = new AIConfiguration("25537dd6c15f44148cd489334c15293d");
+    // dataService = new AIDataService(configuration);
+    String error = null;
     try{
       AIRequest request = new AIRequest();
       request.setSessionId(userId);
+      request.setQuery("empty_query_for_resetting_contexts");
       request.setResetContexts(true);
       dataService.request(request);
     }catch(Exception e){
-
+      error = e.toString();
     }
+
+    if(error != null)
+      log.info("resetAll::error::" + error);
   }
 }
