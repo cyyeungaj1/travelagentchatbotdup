@@ -42,6 +42,7 @@ public class AnnouncementInterface extends UserInterface{
     push("Scheduled Announcement: \n\tTime: " + HKDate.dateFormat.format(date) + "\n\tContent: " + content);
     Runnable task = new ScheduledAnnouncementTask(content);
     controller.schedulePushMsg(task, herokuTime);
+    end();
     setInterface(new MenuInterface(getUserId()));
   }
 

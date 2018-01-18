@@ -182,25 +182,25 @@ public class InterfaceTester{
 
   @Test
   public void testNLPMenu() {
-    // controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "hi"));
-    // controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "i want to announce"));
-    // controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "2018/01/20 18:00:00"));
-    // controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "this is the content kiki"));
-    // controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "wtf"));
-    NLPChatRoom cr = new NLPChatRoom("111");
-    NLPParser p1 = cr.query("hi");
-    p1.getAllContextInfo();
-    log.info("1. " + p1.getReply());
-
-    NLPParser p2 = cr.query("i want to announce");
-    p2.getAllContextInfo();
-    log.info("2. " + p2.getReply());
-
-    cr.resetAll();
-
-    NLPParser p3 = cr.query("hi");
-    p3.getAllContextInfo();
-    log.info("3. " + p3.getReply());
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "hi"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "i want to announce"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "2018/01/20 18:00:00"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "this is the content kiki"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "wtf"));
+    // NLPChatRoom cr = new NLPChatRoom("111");
+    // NLPParser p1 = cr.query("hi");
+    // p1.getAllContextInfo();
+    // log.info("1. " + p1.getReply());
+    //
+    // NLPParser p2 = cr.query("i want to announce");
+    // p2.getAllContextInfo();
+    // log.info("2. " + p2.getReply());
+    //
+    // cr.resetAll();
+    //
+    // NLPParser p3 = cr.query("hi");
+    // p3.getAllContextInfo();
+    // log.info("3. " + p3.getReply());
   }
 
 
