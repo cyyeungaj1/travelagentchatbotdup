@@ -106,6 +106,12 @@ class ParseDateTime extends State{
     NLPParser p = ui.nlpChatRoom.query(result);
 
     aUi.push(p.getReply());
+
+    if(p.getLifespan(PREV) == -1){
+      aUi.push("expire!!! something went wrong");
+      aUi.expire();
+    }
+
     if(p.getAction().equals(ACTION)){
       aUi.setDate(date);
       aUi.setState(new EnterContent(aUi));

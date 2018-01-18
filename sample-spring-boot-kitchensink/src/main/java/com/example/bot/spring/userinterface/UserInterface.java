@@ -57,7 +57,7 @@ public class UserInterface{
   public void expire(){
     setInterface(new MenuInterface(getUserId()));
   }
-  public void end(){
+  private void end(){
     nlpChatRoom.resetAll();
   }
   // public void push(String msg){
