@@ -187,6 +187,8 @@ public class InterfaceTester{
     controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "2018/01/20 18:00:00"));
     controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "this is the content kiki"));
     controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "wtf"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "sure"));
+    controller.processInput("replyToken", "Ufc6e2d7119a764a7c5ebeca95a0d2914", new TextMessageContent("id", "hi"));
     // NLPChatRoom cr = new NLPChatRoom("111");
     // NLPParser p1 = cr.query("hi");
     // p1.getAllContextInfo();

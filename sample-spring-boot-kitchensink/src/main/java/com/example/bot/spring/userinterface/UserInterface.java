@@ -49,7 +49,6 @@ public class UserInterface{
   public void setController(ChatBotController c){controller = c;}
 
   public void setInterface(UserInterface userInterface){
-    // end();
     userInterface.setUserId(userId);
     controller.setInterface(userInterface);
   }
@@ -59,12 +58,12 @@ public class UserInterface{
   }
   public void end(){
     nlpChatRoom.resetAll();
+    setInterface(new MenuInterface(getUserId()));
   }
   // public void push(String msg){
   //   log.info("push::" + msg);
   // }
   public void push(String msg){
-    log.info("push::" + msg);
     if(userId == null)
       return;
     TextMessage textMessage = new TextMessage(msg);
