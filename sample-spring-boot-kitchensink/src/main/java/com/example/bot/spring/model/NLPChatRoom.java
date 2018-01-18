@@ -42,6 +42,7 @@ public class NLPChatRoom{
     try{
       AIRequest request = new AIRequest(str);
       request.setSessionId(userId);
+      log.info("NLP testing:" + userId + "::"+str);
       AIResponse response = dataService.request(request);
       p = new NLPParser(response);
       // log.info("action: " + p.getAction());
