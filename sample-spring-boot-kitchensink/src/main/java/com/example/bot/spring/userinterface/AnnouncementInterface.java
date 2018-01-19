@@ -18,35 +18,30 @@ import com.example.bot.spring.model.NLPChatRoom;
 @Slf4j
 public class AnnouncementInterface extends UserInterface{
   public static final String ANNOUNCE_SECTION = "announce.announce";
-
   private Date date = null;
   private String content = null;
-  // public NLPChatRoom nlpChatRoom = null;
 
   public void setDate(Date d){date = d;}
   public void setContent(String str){content = str;}
 
   public AnnouncementInterface(String id){
     super(id);
-    push("Announcement Section");
     state = new ParseDateTime(this);
   }
 
   public void scheduleAnnouncement(){
     if(date == null || content == null){
       push("Imcomplete!!! error occur");
+      end();
       setInterface(new AnnouncementInterface(getUserId()));
       return;
     }
     Date herokuTime = HKDate.convertToHerokuTime(date);
-    push("Scheduled Announcement: \n\tTime: " + HKDate.dateFormat.format(date) + "\n\tContent: " + content);
+    push("Scheduled Announcement: \n\t\tTime: " + HKDate.dateFormat.format(date) + "\n\t\tContent: " + content);
     Runnable task = new ScheduledAnnouncementTask(content);
-    controller.schedulePushMsg(task, herokuTime);
     end();
-    setInterface(new MenuInterface(getUserId()));
+    controller.schedulePushMsg(task, herokuTime);
   }
-
-
 }
 
 
@@ -58,38 +53,12 @@ class ParseDateTime extends State{
   private final String ACTION = "announce.announce-save-datetime";
   private final String DATE = "date.original";
   private final String TIME = "time.original";
+
   public ParseDateTime(UserInterface ui){
     super(ui);
   }
 
-  public Date checkValidateDate(String str){
-    String error = null;
-    Date d = null;
-    try{
-      d = HKDate.dateFormat.parse(str);
-    }catch(Exception e){
-      error = e.toString();
-      return null;
-    }
-    return d;
-  }
-
-  public boolean checkAfterCurr(Date d){
-    Date date = HKDate.getCurrentTime();
-    if(d.after(date))
-      return true;
-    return false;
-  }
-
   public void process(String text){
-
-    // if(n.getAction().equals(ACTION)){
-    //   Map<String, JsonElement> parameters = n.getParameter(CURR);
-    //   String date1 = parameters.get(DATE).getAsString();
-    //   String time = parameters.get(TIME).getAsString();
-    //   log.info("test::" + date1 + " " + time + "00");
-    //
-    // }
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
     Date date = checkValidateDate(text);
     if(date == null){
@@ -108,9 +77,10 @@ class ParseDateTime extends State{
 
     aUi.push(p.getReply());
 
-    if(p.getLifespan(PREV) == -1){
+    if(p.getLifespan(PREV) == -1 && p.getLifespan(CURR) == -1){
       aUi.push("expire!!! something went wrong");
-      aUi.expire();
+      aUi.end();
+      return;
     }
 
     if(p.getAction().equals(ACTION)){
@@ -124,25 +94,76 @@ class ParseDateTime extends State{
   public String getFlag(){
     return flag;
   }
+
+
+  private Date checkValidateDate(String str){
+    String error = null;
+    Date d = null;
+    try{
+      d = HKDate.dateFormat.parse(str);
+    }catch(Exception e){
+      error = e.toString();
+      return null;
+    }
+    return d;
+  }
+
+  private boolean checkAfterCurr(Date d){
+    Date date = HKDate.getCurrentTime();
+    if(d.after(date))
+      return true;
+    return false;
+  }
 }
 
 
 @Slf4j
 class EnterContent extends State{
   private final String flag = "EnterContent";
-
+  private final String CURR = "announce-ask-content-followup";
   public EnterContent(UserInterface ui){
     super(ui);
-    ui.push("Please Enter the content");
   }
 
   public void process(String text){
     AnnouncementInterface aUi = (AnnouncementInterface)ui;
-    log.info("Content" + text);
     NLPParser p = ui.nlpChatRoom.query(text);
     aUi.setContent(text);
     ui.push(p.getReply());
-    aUi.scheduleAnnouncement();
+    aUi.setState(new ConfirmState(aUi));
+  }
+
+  public String getFlag(){
+    return flag;
+  }
+}
+
+@Slf4j
+class ConfirmState extends State{
+  private final String flag = "ConfirmState";
+  private final String CANCEL = "announce.announce-cancel";
+  private final String CONFIRMED = "announce.announce-confirmed";
+  private final String PREV = "announce-ask-content-followup";
+  public ConfirmState(UserInterface ui){
+    super(ui);
+  }
+
+  public void process(String text){
+    AnnouncementInterface aUi = (AnnouncementInterface)ui;
+    NLPParser p = ui.nlpChatRoom.query(text);
+    aUi.push(p.getReply());
+
+    if(p.getLifespan(PREV) == -1){
+      aUi.push("expire!!! the announcement is canceled");
+      aUi.end();
+      return;
+    }
+
+    if(p.getAction().equals(CONFIRMED)){
+      aUi.scheduleAnnouncement();
+    }else if(p.getAction().equals(CANCEL)){
+      aUi.end();
+    }
   }
 
   public String getFlag(){
@@ -160,7 +181,6 @@ class HKDate{
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.HOUR, DELAY);
     Date result = calendar.getTime();
-    log.info("HKDate::current: " + dateFormat.format(result));
     return result;
   }
 
@@ -169,7 +189,6 @@ class HKDate{
     calendar.setTime(d);
     calendar.add(Calendar.HOUR, -DELAY);
     Date result = calendar.getTime();
-    log.info("HKDate::convertToHerokuTime: " + dateFormat.format(result));
     return calendar.getTime();
   }
 

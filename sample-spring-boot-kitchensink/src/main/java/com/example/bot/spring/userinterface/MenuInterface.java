@@ -28,6 +28,7 @@ class InitState extends State{
 
   public InitState(UserInterface ui){
     super(ui);
+    ui.nlpChatRoom.resetAll();
   }
   public void process(String text){
     ui.setState(new ChooseSection(ui));
