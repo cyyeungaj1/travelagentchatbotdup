@@ -117,7 +117,7 @@ public class KitchenSinkController {
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
-	@Autowired
+
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
