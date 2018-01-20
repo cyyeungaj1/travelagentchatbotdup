@@ -36,8 +36,8 @@ public class AnnouncementInterface extends UserInterface{
       setInterface(new AnnouncementInterface(getUserId()));
       return;
     }
-    Date herokuTime = HKDate.convertToHerokuTime(date);
-    push("Scheduled Announcement: \n\t\tTime: " + HKDate.dateFormat.format(date) + "\n\t\tContent: " + content);
+    Date herokuTime = DateConverter.convertToHerokuTime(date);
+    push("Scheduled Announcement: \n\t\tTime: " + DateConverter.dateFormat.format(date) + "\n\t\tContent: " + content);
     Runnable task = new ScheduledAnnouncementTask(content);
     end();
     controller.schedulePushMsg(task, herokuTime);
@@ -47,7 +47,7 @@ public class AnnouncementInterface extends UserInterface{
 
 @Slf4j
 class ParseDateTime extends State{
-  private final String flag = "ParseDateTime";
+  public static final String FLAG = "ParseDateTime";
   private final String PREV = "announce-followup";
   private final String CURR = "announce-ask-datetime-followup";
   private final String ACTION = "announce.announce-save-datetime";
@@ -72,7 +72,7 @@ class ParseDateTime extends State{
       return;
     }
 
-    String result = HKDate.dateFormat.format(date);
+    String result = DateConverter.dateFormat.format(date);
     NLPParser p = ui.nlpChatRoom.query(result);
 
     aUi.push(p.getReply());
@@ -92,7 +92,7 @@ class ParseDateTime extends State{
   }
 
   public String getFlag(){
-    return flag;
+    return FLAG;
   }
 
 
@@ -100,7 +100,7 @@ class ParseDateTime extends State{
     String error = null;
     Date d = null;
     try{
-      d = HKDate.dateFormat.parse(str);
+      d = DateConverter.dateFormat.parse(str);
     }catch(Exception e){
       error = e.toString();
       return null;
@@ -109,7 +109,7 @@ class ParseDateTime extends State{
   }
 
   private boolean checkAfterCurr(Date d){
-    Date date = HKDate.getCurrentTime();
+    Date date = DateConverter.getCurrentTime();
     if(d.after(date))
       return true;
     return false;
@@ -119,7 +119,7 @@ class ParseDateTime extends State{
 
 @Slf4j
 class EnterContent extends State{
-  private final String flag = "EnterContent";
+  public static final String FLAG = "EnterContent";
   private final String CURR = "announce-ask-content-followup";
   public EnterContent(UserInterface ui){
     super(ui);
@@ -134,13 +134,13 @@ class EnterContent extends State{
   }
 
   public String getFlag(){
-    return flag;
+    return FLAG;
   }
 }
 
 @Slf4j
 class ConfirmState extends State{
-  private final String flag = "ConfirmState";
+  public static final String FLAG = "ConfirmState";
   private final String CANCEL = "announce.announce-cancel";
   private final String CONFIRMED = "announce.announce-confirmed";
   private final String PREV = "announce-ask-content-followup";
@@ -167,13 +167,13 @@ class ConfirmState extends State{
   }
 
   public String getFlag(){
-    return flag;
+    return FLAG;
   }
 }
 
 
 @Slf4j
-class HKDate{
+class DateConverter{
   /*heroku server system time + 8 = hong kong local time*/
   private static final int DELAY = 8;
   public static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

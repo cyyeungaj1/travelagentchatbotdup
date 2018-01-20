@@ -8,12 +8,12 @@ import com.example.bot.spring.model.NLPChatRoom;
 public class MenuInterface extends UserInterface{
   public static final int INIT = 1;
 
-
   public MenuInterface(String id, int i){
     super(id);
     state = new InitState(this);
     push("Welcome~\nMenu:\n1.\tAnnouncement");
   }
+
   public MenuInterface(String id){
     super(id);
     state = new ChooseSection(this);
@@ -24,24 +24,25 @@ public class MenuInterface extends UserInterface{
 
 @Slf4j
 class InitState extends State{
-  private final String flag = "InitState";
+  public static final String FLAG = "InitState";
 
   public InitState(UserInterface ui){
     super(ui);
     ui.nlpChatRoom.resetAll();
   }
+
   public void process(String text){
     ui.setState(new ChooseSection(ui));
   }
 
   public String getFlag(){
-    return flag;
+    return FLAG;
   }
 }
 
 @Slf4j
 class ChooseSection extends State{
-  private final String flag = "ChooseSection";
+  public static final String FLAG = "ChooseSection";
 
   public ChooseSection(UserInterface ui){
     super(ui);
@@ -72,6 +73,6 @@ class ChooseSection extends State{
   }
 
   public String getFlag(){
-    return flag;
+    return FLAG;
   }
 }
