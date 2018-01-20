@@ -47,6 +47,4 @@ public class ConnectionManager{
       log.info("closeConnection::" + error);
 
   }
-
-  public void test(){log.info("connection manager test()");}
 }

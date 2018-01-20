@@ -425,21 +425,6 @@ public class KitchenSinkController {
     	}
     }
 
-
-		// public Date transferStringToDate(String str){
-		//     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		//     String parseError = null;
-		//     Date date = null;
-		//     try{
-		//       date = sdf.parse(str.toString());
-		//     }catch(Exception e){
-		//       parseError = e.toString();
-		//     }
-		//     if(parseError != null)
-		//       log.info("transferStringToDate::" + parseError);
-		//     return date;
-		//   }
-
 		public void scheduleTest(String id){
 			Date date = new Date();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

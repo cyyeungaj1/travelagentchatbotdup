@@ -22,15 +22,10 @@ public class UserInterface{
   public NLPChatRoom nlpChatRoom = null;
 
   public UserInterface(){}
-  // public UserInterface(ChatBotController c){
-  //   controller = c;
-  // }
   public UserInterface(String id){
     userId = id;
     nlpChatRoom = new NLPChatRoom(id);
   }
-
-
 
   public void process(String text){
     log.info("input::" + text);
@@ -53,9 +48,6 @@ public class UserInterface{
     controller.setInterface(userInterface);
   }
 
-  public void expire(){
-    setInterface(new MenuInterface(getUserId()));
-  }
   public void end(){
     nlpChatRoom.resetAll();
     setInterface(new MenuInterface(getUserId()));
