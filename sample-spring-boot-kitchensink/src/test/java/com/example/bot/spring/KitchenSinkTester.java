@@ -61,119 +61,15 @@ import com.example.bot.spring.scheduler.ThreadPoolTaskSchedulerExamples;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-// import com.example.bot.spring.DatabaseEngine;
 // import com.example.bot.spring.dbmanager.ConnectionManager;
 // import com.example.bot.spring.dbmanager.JDBCLineUserManager;
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, DatabaseEngine.class, SQLDatabaseEngine.class }) // ConnectionManager.class,
+@SpringBootTest(classes = { KitchenSinkTester.class}) // ConnectionManager.class,
 // @SpringBootApplication
 @EnableScheduling
 public class KitchenSinkTester {
-	@Autowired
-	private DatabaseEngine databaseEngine;
-	@Autowired
-	private SQLDatabaseEngine sqlDatabaseEngine;
 
-	@Test
-	public void testNotFound() throws Exception {
-		boolean thrown = false;
-		try {
-			this.databaseEngine.search("no");
-		} catch (Exception e) {
-			thrown = true;
-		}
-		assertThat(thrown).isEqualTo(true);
-	}
-
-	@Test
-	public void testFound() throws Exception {
-		boolean thrown = false;
-		String result = null;
-		try {
-			result = this.databaseEngine.search("abc");
-		} catch (Exception e) {
-			thrown = true;
-		}
-		assertThat(!thrown).isEqualTo(true);
-		assertThat(result).isEqualTo("def");
-	}
-
-	@Test
-	public void testHiFound() throws Exception {
-		boolean thrown = false;
-		String result = null;
-		try {
-			result = this.databaseEngine.search("Hi");
-		} catch (Exception e) {
-			thrown = true;
-		}
-		assertThat(!thrown).isEqualTo(true);
-		assertThat(result).isEqualTo("Hey, how things going?");
-	}
-
-
-	// @Test
-	// public void testAutoWired() {
-  //
-	// 	String result = connectionManager.test();
-	// 	log.info("autowired::" + result);
-	// 	assertThat(result).isEqualTo("autowired test successful");
-	// }
-
-	@Test
-	public void testSQL() {
-
-		try{
-
-			String result = sqlDatabaseEngine.search("matt");
-			assertThat(result).isEqualTo("is handsome");
-			log.info("sql::" + result);
-			result = sqlDatabaseEngine.search("handsome");
-			assertThat(result).isEqualTo("is matt");
-			log.info("sql::" + result);
-			result = sqlDatabaseEngine.search("mattt");
-			// assertThat(result).isEqualTo("is handsome");
-			log.info("sql::" + result);
-
-		}catch(Exception e){
-
-		}
-	}
-
-
-	@Test
-	public void testConnection() {
-		for(int i = 0; i < 50; ++i){
-			String error = null;
-			try{
-				SQLDatabaseEngine dbe = new SQLDatabaseEngine();
-				String result = dbe.search("matt");
-				log.info(Integer.toString(i) + ", " + result);
-			}catch(Exception e){
-				error = e.toString();
-			}
-			if(error != null)
-				log.info(Integer.toString(i) + ", " + error);
-		}
-	}
-
-	// @Test
-	// public void testCreateUser() {
-	// 	JDBCLineUserManager mLine = new JDBCLineUserManager();
-	// 	for(int i = 0; i < 30; ++i){
-	// 		UserFactory uf = new UserFactory();
-	// 		uf.setLineId(Integer.toString(i));
-	// 		User user = mLine.createUser(uf.getUser());
-	// 		log.info(Integer.toString(i) + ": testCreateUser::ID: " + user.getId());
-	// 		log.info(Integer.toString(i) + ": testCreateUser::LineId: " + user.getLineId());
-	// 	}
-  //
-  //
-	// 	assertThat("abc").isEqualTo("abc");
-	// }
-	// @Autowired
-	// private ThreadPoolTaskScheduler taskScheduler;
 	@Test
   public void schedulerTest() throws Exception {
       // ThreadPoolTaskSchedulerExamples tptse = new ThreadPoolTaskSchedulerExamples();
@@ -210,7 +106,7 @@ public class KitchenSinkTester {
 			log.info("ping::error:" + error);
 
 	}
-  // 
+  //
 	// @Test
 	// public void chatbotConTrollerTest(){
 	// 	ChatBotController cbc = new ChatBotController();

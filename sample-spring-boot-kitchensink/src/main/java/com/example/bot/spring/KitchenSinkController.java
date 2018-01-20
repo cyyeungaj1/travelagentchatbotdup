@@ -48,7 +48,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import com.google.common.io.ByteStreams;
 
-// import com.example.bot.spring.AutowiredtesterImp;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -119,8 +118,7 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	@Autowired
-	@Qualifier("awired")
-	private Autowiredtester autowiredtesterImp;
+
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -268,17 +266,7 @@ public class KitchenSinkController {
 				// 			ChatBotController cb = new ChatBotController();
 				// 			break;
 				// 		}
-				// 		case "autowired":{
-				// 			String result = autowiredtesterImp.test();
-				// 			if(result != null){
-				// 				this.replyText(replyToken, result);
-				// 			}else{
-				// 				this.replyText(replyToken, "autowired result is null");
-				// 			}
-        //
-				// 			break;
-				// 		}
-        //     case "profile": {
+        //    case "profile": {
         //         String userId = event.getSource().getUserId();
         //         if (userId != null) {
         //             lineMessagingClient
@@ -381,12 +369,9 @@ public class KitchenSinkController {
 
 
 	public KitchenSinkController() {
-		// database = new DatabaseEngine();
-		database = new SQLDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 	}
 
-	private DatabaseEngine database;
 	private String itscLOGIN;
 
 
